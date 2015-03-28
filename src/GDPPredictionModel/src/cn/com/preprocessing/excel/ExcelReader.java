@@ -19,6 +19,18 @@ public class ExcelReader {
 	
 	
 
+	public HSSFWorkbook getWorkbook() {
+		return workbook;
+	}
+	public void setWorkbook(HSSFWorkbook workbook) {
+		this.workbook = workbook;
+	}
+	public HSSFSheet getCurrentProcessSheet() {
+		return currentProcessSheet;
+	}
+	public void setCurrentProcessSheet(HSSFSheet currentProcessSheet) {
+		this.currentProcessSheet = currentProcessSheet;
+	}
 	public String getFileName() {
 		return fileName;
 	}

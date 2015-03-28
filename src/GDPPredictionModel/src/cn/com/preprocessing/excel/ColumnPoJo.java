@@ -7,6 +7,15 @@ public class ColumnPoJo {
 	private double[] data = new double[MAX_COLUMN_NUMBER];
 	private String header="";
 	private int number = 0;
+	private double coefficient = 0;
+
+	public double getCoefficient() {
+		return coefficient;
+	}
+
+	public void setCoefficient(double coefficient) {
+		this.coefficient = coefficient;
+	}
 
 	public int getNumber() {
 		return number;
