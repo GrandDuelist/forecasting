@@ -32,7 +32,11 @@ public class AttributeFilter {
 			ColumnPoJo compare = excelReader.getTargetCol(sheetName, i);
 			double coef = math.calcCoefficient(target.getData(),compare.getData(),target.getNumber());
 			compare.setCoefficient(coef);
-			columns.add(compare);
+	
+			if(i!=targetCol){
+				columns.add(compare);
+			}
+			
 			System.out.println(compare.getHeader()+"  "+compare.getCoefficient());
 		}
 									

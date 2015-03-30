@@ -113,9 +113,7 @@ public class ExcelReader {
 			}
 		}
 		
-		return column;
-		
-		
+		return column;	
 	}
 	
 	//print col data

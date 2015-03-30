@@ -1,10 +1,49 @@
 package cn.com.forecasting.mullinearregression;
 
+import java.util.List;
+
+import cn.com.preprocessing.excel.ColumnPoJo;
+
 public class MultivariableLinearRegression {
+	
+	/**
+	 * apply regression to column pojo
+	 * @param xColumnPoJo x自变量的集合 
+	 * @param yColumnPoJo y应变量的集合
+	 * @param coef	存放结果回归系数的数组
+	 * @param judgeData	存放判定结果参数的矩阵
+	 * @param v	偏相关系数矩阵	 vi 越大，表示xi对	y的作用越显著
+	 */
+	public void regressionByColumnPoJo(List<ColumnPoJo> xColumnPoJo,ColumnPoJo yColumnPoJo,
+			double[] coef,double[] judgeData, double[] v){
+		int numberX = xColumnPoJo.size();
+		int numberData = yColumnPoJo.getNumber();
 		
-	public void resolve(double [][] X, double [] Y,int numberX,int numberData, double []coef,double judgeData
+		
+		double[][] X =  new double[numberX][numberData];
+		double[] Y = yColumnPoJo.getData();
+		
+		for(int i=0; i < numberX; i++){
+			double[] currentX = xColumnPoJo.get(i).getData();
+			for(int j=0; j < numberData; j++){
+				X[i][j] = currentX[j];
+			}
+		}
+		
+		this.resolve(X, Y, numberX, numberData, coef, judgeData, v);
+		
+		for(int i =0; i<numberX;i++){
+			String name = xColumnPoJo.get(i).getHeader();
+			System.out.println(name+" 回归系数： "+coef[i]+ " 偏相关系数： "+v[i]);
+		}
+	}
+	
+	
+	
+	public void resolve(double [][] X, double [] Y,int numberX,int numberData, double []coef,double[] judgeData
 			,double[] v){
 		int a = numberX+1;
+		double yy;
 		double[] tempArray  = new double[a*a];
 		tempArray[a*a-1] = numberData;
 		
@@ -21,7 +60,7 @@ public class MultivariableLinearRegression {
 		for(int i=0;i<numberX;i++){
 			for(int j=i;j<numberX;j++){
 				p=0;
-				for(int k=0;i<numberData;k++){
+				for(int k=0;k<numberData;k++){
 					p=p+X[i][k]*X[j][k];
 				}
 				
@@ -45,6 +84,47 @@ public class MultivariableLinearRegression {
 		}
 		
 		calChlk(tempArray,a,1,coef);
+		yy=0;
+		for(int i=0;i<numberData;i++){
+			yy=yy+Y[i]/numberData;
+		}
+		double q=0, e=0,u=0;
+		for(int i=0;i<numberData;i++){
+			p=coef[numberX];
+			for(int j=0;j<numberX;j++){
+				p = p+coef[j]*X[j][i];
+			}
+			
+			q=q+(Y[i]-p)*(Y[i]-p);
+			e=e+(Y[i]-yy)*(Y[i]-yy);
+			u=u+(yy-p)*(yy-p);
+			
+		}
+		
+		
+		double s,r,pp;
+		s=Math.sqrt(q/numberData);
+		r=Math.sqrt(1-q/e);
+		
+		for(int j=0;j<numberX;j++){
+			p=0;
+			for(int i=0;i<numberData;i++){
+				pp=coef[numberX];
+				for(int k=0;k<numberX;k++){
+					if(k!=j){
+						pp=pp+coef[k]*X[k][i];
+					}
+				}
+				p=p+(Y[i]-pp)*(Y[i]-pp);
+			}
+			
+			v[j]= Math.sqrt(1-q/p);
+		}
+		
+		judgeData[0] = q;
+		judgeData[1] = s;
+		judgeData[2] = r;
+		judgeData[3] = u;
 	}
 	
 	
@@ -56,13 +136,13 @@ public class MultivariableLinearRegression {
 		}
 		a[0]=Math.sqrt(a[0]);
 		
-		for(int i=0;i<n;i++){
+		for(int i=1;i<n;i++){
 			a[i]=a[i]/a[0];
 		}
 		
-		for(int i=0;i<n;i++){
+		for(int i=1;i<n;i++){
 			u=i*n+i;
-			for(int j=0;j<i+1;j++){
+			for(int j=1;j<i+1;j++){
 				v=(j-1)*n+i;
 				a[u]=a[u]-a[v]*a[v];
 			}
