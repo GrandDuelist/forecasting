@@ -115,6 +115,7 @@ public class MultivariableLinearRegression {
 						pp=pp+coef[k]*X[k][i];
 					}
 				}
+				
 				p=p+(Y[i]-pp)*(Y[i]-pp);
 			}
 			
