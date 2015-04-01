@@ -30,6 +30,9 @@ public class RegressionTest {
 			double[] v = new double[numberX];
 			
 			regression.regressionByColumnPoJo(xColumnPoJo, yColumnPoJo, coef, judgeData, v);
+			ColumnPoJo result = new ColumnPoJo();
+			regression.evaluation(xColumnPoJo, yColumnPoJo, result, coef);
+			
 			reader.closeInputStream();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

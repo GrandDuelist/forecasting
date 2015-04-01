@@ -192,4 +192,22 @@ public class MultivariableLinearRegression {
 		}
 		return true;
 	}
+	
+	public boolean evaluation(List<ColumnPoJo> xPoJos, ColumnPoJo yPoJo,ColumnPoJo result, double[] coef){
+		int nX = xPoJos.size();
+		int nData = yPoJo.getNumber();
+		
+		for(int i=0;i<nData;i++){
+			double currentResult = 0;
+			for(int j=0;j<nX;j++){
+				currentResult += xPoJos.get(j).getData()[i]*xPoJos.get(j).getCoefficient();
+			}
+			currentResult += coef[nX];
+			result.getData()[i]=currentResult;
+			result.setNumber((result.getNumber()+1));
+			System.out.println("预测值： "+currentResult+" 实际值： "+yPoJo.getData()[i]);
+		}
+	
+		return true;
+	}
 }
