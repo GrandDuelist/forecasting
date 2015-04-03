@@ -21,6 +21,7 @@ public class MathCalculation {
 		double b_average = this.calcAverage(b, length);
 		double result =0;
 		
+		
 		for(int i=0;i<length;i++){
 			result+=(a[i]-a_average)*(b[i]-b_average);
 		}
@@ -32,11 +33,9 @@ public class MathCalculation {
 	//calculate  the coefficient of two array
 		public double calcCoefficient(double[] a, double[] b, int length){
 			double co = 0;
-			
 			double a_var = this.calcCovariance(a, a, length);
 			double b_var = this.calcCovariance(b, b, length);
 			double a_b_cov = this.calcCovariance(a, b, length);
-			
 			co = a_b_cov/(Math.sqrt(a_var*b_var));
 			
 			return co;

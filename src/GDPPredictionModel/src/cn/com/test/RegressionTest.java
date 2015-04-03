@@ -25,11 +25,11 @@ public class RegressionTest {
 			ColumnPoJo yColumnPoJo = reader.getTargetCol("上海", 6);
 			
 			int numberX = xColumnPoJo.size();
-			double[] coef = new double[numberX+1];
+			
 			double[] judgeData = new double[4];
 			double[] v = new double[numberX];
 			
-			regression.regressionByColumnPoJo(xColumnPoJo, yColumnPoJo, coef, judgeData, v);
+			double[] coef = regression.regressionByColumnPoJo(xColumnPoJo, yColumnPoJo, judgeData, v);
 			ColumnPoJo result = new ColumnPoJo();
 			regression.evaluation(xColumnPoJo, yColumnPoJo, result, coef);
 			
