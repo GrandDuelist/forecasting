@@ -120,7 +120,6 @@ public class ExcelReader {
 	public void printColData(ColumnPoJo column) {
 		// TODO Auto-generated method stub
 		System.out.print("Header: "+ column.getHeader()+"\n");
-		double[] data = column.getData();
 		for(int i=0; i< column.getNumber();i++){
 			System.out.print(column.getData()[i]+" ");
 		}
