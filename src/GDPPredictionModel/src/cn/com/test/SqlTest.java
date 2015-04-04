@@ -10,10 +10,9 @@ public class SqlTest {
 		EconomyHandle handle = new EconomyHandle();
 		try {
 			handle.connect();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
+			handle.selectAll();
+			handle.close();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
