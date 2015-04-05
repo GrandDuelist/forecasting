@@ -1,6 +1,7 @@
 package cn.com.test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.forecasting.mullinearregression.MultivariableLinearRegression;
@@ -8,6 +9,8 @@ import cn.com.preprocessing.AttributeFilter;
 import cn.com.preprocessing.excel.ColumnPoJo;
 import cn.com.preprocessing.excel.ExcelReader;
 import cn.com.preprocessing.math.MathCalculation;
+import cn.com.sql.handle.EconomyHandle;
+import cn.com.sql.pojo.EconomyPoJo;
 
 public class RegressionTest {
 	
@@ -21,11 +24,16 @@ public class RegressionTest {
 		MultivariableLinearRegression regression = new MultivariableLinearRegression();
 		try {
 			reader.readExcelFile();
-			List<ColumnPoJo> xColumnPoJo = filter.getAllDataWithCoefficient("上海", 6);
-			ColumnPoJo yColumnPoJo = reader.getTargetCol("上海", 6);
+			/*List<ColumnPoJo> xColumnPoJo = filter.getAllDataWithCoefficient("上海", 6);
+			ColumnPoJo yColumnPoJo = reader.getTargetCol("上海", 6);*/
+			EconomyHandle handle = new EconomyHandle();
+			handle.connect();
+			List<EconomyPoJo> pojos = handle.selectAll();
+			handle.close();
+			ColumnPoJo yColumnPoJo = new ColumnPoJo();
+			List<ColumnPoJo> xColumnPoJo = reader.transFromSqlToColumn(pojos, yColumnPoJo);
 			
 			int numberX = xColumnPoJo.size();
-			
 			double[] judgeData = new double[4];
 			double[] v = new double[numberX];
 			
@@ -34,7 +42,7 @@ public class RegressionTest {
 			regression.evaluation(xColumnPoJo, yColumnPoJo, result, coef);
 			
 			reader.closeInputStream();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

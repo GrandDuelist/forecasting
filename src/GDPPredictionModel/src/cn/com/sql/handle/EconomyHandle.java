@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.preprocessing.excel.ColumnPoJo;
 import cn.com.sql.pojo.EconomyPoJo;
 
 
@@ -68,19 +69,18 @@ public class EconomyHandle {
             String sql = "select * from economy";
             // 结果集
             ResultSet rs = statement.executeQuery(sql);
-            
             while(rs.next()){
             	EconomyPoJo current = new EconomyPoJo();
             	
             	current.setYear(rs.getInt("year"));
-            	current.setCityGDP(rs.getDouble("cityGDP"));
-            	current.setEnergyConsumePerGDP(rs.getDouble("单位GDP能耗"));
-            	current.setForeignInvestMent(rs.getDouble("实际利用外资"));
-            	current.setExportTrade(rs.getDouble("货物一般贸易出口总额"));
-            	current.setGrossRetailSales(rs.getDouble("社会消费品零售总额"));
-            	current.setImportExportTrade(rs.getDouble("进出口贸易总额"));
-            	current.setIndustryIncrement(rs.getDouble("工业增加值"));
-            	
+            	current.setCityGDP(rs.getDouble("city_gdp"));
+            	current.setPopulation(rs.getDouble("population"));
+            	current.setEnergyConsumePerGDP(rs.getDouble("energy_consume_per_gdp"));
+            	current.setForeignInvestMent(rs.getDouble("foreign_investment"));
+            	current.setExportTrade(rs.getDouble("export_trade"));
+            	current.setGrossRetailSales(rs.getDouble("retail_sale"));
+            	current.setImportExportTrade(rs.getDouble("import_export_trade"));
+            	current.setIndustryIncrement(rs.getDouble("industry_increment"));
             	pojos.add(current);
             }
             
@@ -94,8 +94,8 @@ public class EconomyHandle {
 		try {
 			if(!conn.isClosed()) {
 				 // 要执行的SQL语句
-	           String sql = "INSERT INTO `forecasting`.`economy`(`year`,`cityGDP`,`单位GDP能耗`,` 人口数`," +
-	           		"`实际利用外资`,`货物一般贸易出口总额`,`社会消费品零售总额`,`进出口贸易总额`,`工业增加值`)" +
+	           String sql = "INSERT INTO `forecasting`.`economy` (`year`,`city_gdp`,`energy_consume_per_gdp`,`population`," +
+	           		"`foreign_investment`,`export_trade`,`retail_sale`,`import_export_trade`,`industry_increment`) " +
 	           		"VALUES (?,?,?,?,?,?,?,?,?);";
 	           PreparedStatement pst = conn.prepareStatement(sql);
 	           pst.setInt(1, pojo.getYear());
@@ -116,5 +116,8 @@ public class EconomyHandle {
 		}
 		
 	}
-
+	
+	
+	
+	
 }
