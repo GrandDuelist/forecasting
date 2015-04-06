@@ -47,8 +47,49 @@ public class BaseAnn {
 		hidDelta = new double[hiddenSize+1];
 		optDelta = new double[outputSize+1];
 		
+		iptHidWeights = new double[inputSize+1][hiddenSize+1];
+		hidOptWeights = new double[hiddenSize+1][outputSize+1];
+		
+		//初始化权值
+		random = new Random(20120517);
+		this.randomizeWeights(iptHidWeights);
+		this.randomizeWeights(hidOptWeights);
 		
 		
+		//收敛快慢
+		this.eta=eta;
+		this.momentum=momentum;
 	}
+	
+	
+	//随机初始化权值
+	public void randomizeWeights(double[][] matrix)
+	{
+		for(int i=0; i<matrix.length;i++){
+			for(int j=0;j<matrix[i].length;i++){
+				double temp = random.nextDouble();
+				matrix[i][j] = random.nextDouble()>0.5?temp:-temp;
+			}
+		}
+	}
+	
+	
+	//重构
+	public BaseAnn(int inputSize, int hiddenSize, int outputSize){
+		this(inputSize,hiddenSize,outputSize,0.25,0.9);
+	}
+	
+	
+	private void loadInput(double[] inData){
+		if(inData.length!=input.length-1){
+			throw new IllegalArgumentException("size not match");
+		}
+		System.arraycopy(inData, 0, input, 1, input.length);
+		forward();
+		return getNetworkOut();
+	}
+	
+	
+	
 	
 }
