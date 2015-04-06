@@ -56,6 +56,9 @@ public class BaseAnn {
 		this.randomizeWeights(hidOptWeights);
 		
 		
+<<<<<<< HEAD
+		
+=======
 		//收敛快慢
 		this.eta=eta;
 		this.momentum=momentum;
@@ -77,6 +80,7 @@ public class BaseAnn {
 	//重构
 	public BaseAnn(int inputSize, int hiddenSize, int outputSize){
 		this(inputSize,hiddenSize,outputSize,0.25,0.9);
+>>>>>>> 4e8b460f48c2cd2b0aabc73b62aef6f838a2a24b
 	}
 	
 	
