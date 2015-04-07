@@ -79,13 +79,28 @@ public class BaseAnn {
 		this(inputSize,hiddenSize,outputSize,0.25,0.9);
 	}
 	
-	
-	private void loadInput(double[] inData){
+	//导入输入数据
+	public void loadInput(double[] inData){
 		if(inData.length!=input.length-1){
 			throw new IllegalArgumentException("size not match");
 		}
 		System.arraycopy(inData, 0, input, 1, input.length);
 	}
+	
+	
+	//导入目标数据
+	public void loadTarget(double[] arg){
+		if(arg.length!=target.length-1){
+			throw new IllegalArgumentException("size not match");
+		}
+		
+		System.arraycopy(arg, 0, target, 1, arg.length);
+	}
+	
+	
+	
+	
+	
 	
 	
 	
