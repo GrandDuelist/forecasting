@@ -85,8 +85,6 @@ public class BaseAnn {
 			throw new IllegalArgumentException("size not match");
 		}
 		System.arraycopy(inData, 0, input, 1, input.length);
-		forward();
-		return getNetworkOut();
 	}
 	
 	
