@@ -8,7 +8,7 @@ import cn.com.forecasting.bp.BaseAnn;
 
 public class BaseAnnTest {	
 	public static void main(String[] args){
-		BaseAnn bs = new BaseAnn(32,15,4);
+	/*	BaseAnn bs = new BaseAnn(32,15,4);
 		Random random = new Random();
 		List<Integer> list = new ArrayList<Integer>();
 	
@@ -24,6 +24,10 @@ public class BaseAnnTest {
 					
 				}
 			}
-		}
+		}*/
+		
+//		int a =1 ;
+//		a >>>= 1;
+		System.out.println((-Integer.MIN_VALUE));
 	}
 }

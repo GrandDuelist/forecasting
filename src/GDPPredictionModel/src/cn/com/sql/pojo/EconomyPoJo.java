@@ -86,5 +86,18 @@ public class EconomyPoJo {
 	}
 	
 	
+	public double[] changeAttributeToArray(){
+		double[] result = new double[8];
+		result[0] = this.cityGDP;
+		result[1] = this.energyConsumePerGDP;
+		result[2] = this.exportTrade;
+		result[3] = this.grossRetailSales;
+		result[4] = this.population;
+		result[5] = this.importExportTrade;
+		result[6] = this.industryIncrement;
+		result[7] = this.foreignInvestMent;
+		return result;
+	}
+	
 	
 }
