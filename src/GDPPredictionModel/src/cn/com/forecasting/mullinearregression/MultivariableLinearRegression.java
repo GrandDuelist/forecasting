@@ -285,6 +285,7 @@ public class MultivariableLinearRegression {
 		return result;
 	}
 	
+
 	/**
 	 * 计算回归系数
 	 * @param X

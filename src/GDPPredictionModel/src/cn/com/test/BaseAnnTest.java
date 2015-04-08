@@ -1,10 +1,14 @@
 package cn.com.test;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import cn.com.forecasting.bp.BaseAnn;
+import cn.com.forecasting.bp.EconomyBP;
+import cn.com.sql.handle.EconomyHandle;
+import cn.com.sql.pojo.EconomyPoJo;
 
 public class BaseAnnTest {	
 	public static void main(String[] args){
@@ -28,6 +32,23 @@ public class BaseAnnTest {
 		
 //		int a =1 ;
 //		a >>>= 1;
-		System.out.println((-Integer.MIN_VALUE));
+	//	System.out.println((-Integer.MIN_VALUE));
+		EconomyHandle handle = new EconomyHandle();
+		
+	
+		List<EconomyPoJo> pojos;
+		try {
+			handle.connect();
+			pojos = handle.selectAll();
+			handle.close();
+			
+			EconomyBP bp = new EconomyBP(8,4,1);
+			bp.trainByEconomyList(pojos, 200);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 }

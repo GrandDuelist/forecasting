@@ -55,7 +55,8 @@ public class BaseAnn {
 		this.randomizeWeights(iptHidWeights);
 		this.randomizeWeights(hidOptWeights);
 		
-		
+		iptHidPreUptWeights = new double[inputSize + 1][hiddenSize + 1];  
+	    hidOptPreUptWeights = new double[hiddenSize + 1][outputSize + 1];
 		//收敛快慢
 		this.eta=eta;
 		this.momentum=momentum;
@@ -66,13 +67,22 @@ public class BaseAnn {
 	public void randomizeWeights(double[][] matrix)
 	{
 		for(int i=0; i<matrix.length;i++){
-			for(int j=0;j<matrix[i].length;i++){
+			for(int j=0;j<matrix[i].length;j++){
 				double temp = random.nextDouble();
 				matrix[i][j] = random.nextDouble()>0.5?temp:-temp;
 			}
 		}
 	}
 	
+	
+	public double[] test(double[] inData) {  
+        if (inData.length != input.length - 1) {  
+            throw new IllegalArgumentException("Size Do Not Match.");  
+        }  
+        System.arraycopy(inData, 0, input, 1, inData.length);  
+        forward();  
+        return getNetworkOutput();  
+    }  
 	
 	//重构
 	public BaseAnn(int inputSize, int hiddenSize, int outputSize){
@@ -84,7 +94,7 @@ public class BaseAnn {
 		if(inData.length!=input.length-1){
 			throw new IllegalArgumentException("size not match");
 		}
-		System.arraycopy(inData, 0, input, 1, input.length);	
+		System.arraycopy(inData, 0, input, 1, inData.length);	
 	}
 	
 	
