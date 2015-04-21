@@ -71,7 +71,7 @@ public class EconomyHandle {
             ResultSet rs = statement.executeQuery(sql);
             while(rs.next()){
             	EconomyPoJo current = new EconomyPoJo();
-            	
+            	current.setMonth(rs.getInt("month"));
             	current.setYear(rs.getInt("year"));
             	current.setCityGDP(rs.getDouble("city_gdp"));
             	current.setPopulation(rs.getDouble("population"));
@@ -81,6 +81,7 @@ public class EconomyHandle {
             	current.setGrossRetailSales(rs.getDouble("retail_sale"));
             	current.setImportExportTrade(rs.getDouble("import_export_trade"));
             	current.setIndustryIncrement(rs.getDouble("industry_increment"));
+            	current.setMonth(rs.getInt("month"));
             	pojos.add(current);
             }
             
@@ -95,8 +96,8 @@ public class EconomyHandle {
 			if(!conn.isClosed()) {
 				 // 要执行的SQL语句
 	           String sql = "INSERT INTO `forecasting`.`economy` (`year`,`city_gdp`,`energy_consume_per_gdp`,`population`," +
-	           		"`foreign_investment`,`export_trade`,`retail_sale`,`import_export_trade`,`industry_increment`) " +
-	           		"VALUES (?,?,?,?,?,?,?,?,?);";
+	           		"`foreign_investment`,`export_trade`,`retail_sale`,`import_export_trade`,`industry_increment`,`month`) " +
+	           		"VALUES (?,?,?,?,?,?,?,?,?,?);";
 	           PreparedStatement pst = conn.prepareStatement(sql);
 	           pst.setInt(1, pojo.getYear());
 	           pst.setDouble(2, pojo.getCityGDP());
@@ -107,6 +108,7 @@ public class EconomyHandle {
 	           pst.setDouble(7, pojo.getGrossRetailSales());
 	           pst.setDouble(8, pojo.getImportExportTrade());
 	           pst.setDouble(9, pojo.getIndustryIncrement());
+	           pst.setInt(10,pojo.getMonth());
 	           pst.executeUpdate();
 			}
 			
@@ -117,7 +119,9 @@ public class EconomyHandle {
 		
 	}
 	
-	
+	public void printEconomyPoJo(EconomyPoJo pojo){
+		
+	}
 	
 	
 }
