@@ -46,7 +46,14 @@ public class MultivariableLinearRegression {
 	
 	
 
-	
+	/**
+	 * 对结果进行评价
+	 * @param xPoJos
+	 * @param yPoJo
+	 * @param result
+	 * @param coef
+	 * @return
+	 */
 	public boolean evaluation(List<ColumnPoJo> xPoJos, ColumnPoJo yPoJo,ColumnPoJo result, double[] coef){
 		int nX = xPoJos.size()+1;
 		int nData = yPoJo.getNumber();

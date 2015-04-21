@@ -15,7 +15,7 @@ import cn.com.sql.pojo.EconomyPoJo;
 
 public class EconomyHandle {
 	public String driver = "com.mysql.jdbc.Driver";
-	public String url = "jdbc:mysql://localhost:3306/forecasting";
+	public String url = "jdbc:mysql://10.60.36.74:3306/forecasting";
 	public String user = "root";
 	public String psword = "wancar";
 	Connection conn;
@@ -81,7 +81,7 @@ public class EconomyHandle {
             	current.setGrossRetailSales(rs.getDouble("retail_sale"));
             	current.setImportExportTrade(rs.getDouble("import_export_trade"));
             	current.setIndustryIncrement(rs.getDouble("industry_increment"));
-            	current.setMonth(rs.getInt("month"));
+            	current.setTax(rs.getDouble("tax"));
             	pojos.add(current);
             }
             
@@ -97,7 +97,7 @@ public class EconomyHandle {
 				 // 要执行的SQL语句
 	           String sql = "INSERT INTO `forecasting`.`economy` (`year`,`city_gdp`,`energy_consume_per_gdp`,`population`," +
 	           		"`foreign_investment`,`export_trade`,`retail_sale`,`import_export_trade`,`industry_increment`,`month`) " +
-	           		"VALUES (?,?,?,?,?,?,?,?,?,?);";
+	           		"VALUES (?,?,?,?,?,?,?,?,?,?,?);";
 	           PreparedStatement pst = conn.prepareStatement(sql);
 	           pst.setInt(1, pojo.getYear());
 	           pst.setDouble(2, pojo.getCityGDP());
@@ -109,6 +109,7 @@ public class EconomyHandle {
 	           pst.setDouble(8, pojo.getImportExportTrade());
 	           pst.setDouble(9, pojo.getIndustryIncrement());
 	           pst.setInt(10,pojo.getMonth());
+	           pst.setDouble(11, pojo.getTax());
 	           pst.executeUpdate();
 			}
 			
@@ -118,6 +119,37 @@ public class EconomyHandle {
 		}
 		
 	}
+	
+	
+	public void insertToEconomyMonth(EconomyPoJo pojo){
+		try {
+			if(!conn.isClosed()) {
+				 // 要执行的SQL语句
+	           String sql = "INSERT INTO `forecasting`.`economy_month` (`year`,`city_gdp`,`energy_consume_per_gdp`,`population`," +
+	           		"`foreign_investment`,`export_trade`,`retail_sale`,`import_export_trade`,`industry_increment`,`month`,`tax`) " +
+	           		"VALUES (?,?,?,?,?,?,?,?,?,?,?);";
+	           PreparedStatement pst = conn.prepareStatement(sql);
+	           pst.setInt(1, pojo.getYear());
+	           pst.setDouble(2, pojo.getCityGDP());
+	           pst.setDouble(3, pojo.getEnergyConsumePerGDP());
+	           pst.setDouble(4, pojo.getPopulation());
+	           pst.setDouble(5, pojo.getForeignInvestMent());
+	           pst.setDouble(6, pojo.getExportTrade());
+	           pst.setDouble(7, pojo.getGrossRetailSales());
+	           pst.setDouble(8, pojo.getImportExportTrade());
+	           pst.setDouble(9, pojo.getIndustryIncrement());
+	           pst.setInt(10,pojo.getMonth());
+	           pst.setDouble(11, pojo.getTax());
+	           pst.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	
 	

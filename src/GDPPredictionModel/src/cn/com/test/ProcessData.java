@@ -21,8 +21,7 @@ public class ProcessData {
 				EconomyPoJo pre = economies.get(i-1);
 				EconomyPoJo current = economies.get(i);
 				EconomyPoJo[] pojos= changeYearToMonthEconomy(pre,current);
-				EconomyPoJo pojo =pojos[1];
-				pojo.changeAttributeToArray();
+				insertMonthDataToDatabase(pojos,handle);
 				
 			}
 			
@@ -32,6 +31,15 @@ public class ProcessData {
 		}
 		
 		handle.close();
+	}
+	
+	public static void insertMonthDataToDatabase(EconomyPoJo[] pojos,EconomyHandle handle){
+		
+		for(int i=0;i<pojos.length;i++){
+			EconomyPoJo pojo = pojos[i];
+			handle.insertToEconomyMonth(pojo);
+		}
+		
 	}
 	/**
 	 * 将年份数据模拟为月份数据
@@ -49,7 +57,7 @@ public class ProcessData {
 		double[] monthPopulation = gradualChangeGenerateMonthData((yearPoJo.getPopulation()-preYearPoJo.getPopulation())*0.05/12,12,preYearPoJo.getPopulation(),yearPoJo.getPopulation());
 		double[] monthRetailSales = randomGenerateMonthData(yearPoJo.getGrossRetailSales(),yearPoJo.getGrossRetailSales()/12*0.005);
 		double[] monthEnergyConsumePerGDP = gradualChangeGenerateMonthData((yearPoJo.getEnergyConsumePerGDP()-preYearPoJo.getEnergyConsumePerGDP())/12*0.05,12,preYearPoJo.getEnergyConsumePerGDP(),yearPoJo.getEnergyConsumePerGDP());
-		
+		double[] monthTax = randomGenerateMonthData(yearPoJo.getTax(),yearPoJo.getTax()/12*0.005);
 		for(int i=0;i<12;i++){
 			pojos[i] = new EconomyPoJo();
 			pojos[i].setYear(yearPoJo.getYear());  //设置年数据
@@ -62,6 +70,7 @@ public class ProcessData {
 			pojos[i].setImportExportTrade(monthImportExportTrade[i]);
 			pojos[i].setIndustryIncrement(monthIndustryIncrement[i]);
 			pojos[i].setPopulation(monthPopulation[i]);
+			pojos[i].setTax(monthTax[i]);
 			
 		}
 		return pojos;

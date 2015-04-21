@@ -11,7 +11,7 @@ public class EconomyPoJo {
 	private double importExportTrade; //进出口贸易总额
 	private double industryIncrement; //工业增加值
 	private int month;  //月份
-	
+	private double tax;
 	
 	public EconomyPoJo(){}	
 	public EconomyPoJo(int year, double cityGDP, double energyConsumePerGDP,
@@ -90,6 +90,12 @@ public class EconomyPoJo {
 	}
 	public int getMonth(){
 		return this.month;
+	}
+	public double getTax(){
+		return this.tax;
+	}
+	public void setTax(double tax){
+		this.tax=tax;
 	}
 	
 	public double[] changeAttributeToArray(){
