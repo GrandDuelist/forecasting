@@ -11,7 +11,11 @@ import java.util.List;
 
 import cn.com.preprocessing.excel.ColumnPoJo;
 import cn.com.sql.pojo.EconomyPoJo;
-
+/***
+ * 经济实体代理，处理所有实体接口
+ * @author zhihan
+ *
+ */
 
 public class EconomyHandle {
 	public String driver = "com.mysql.jdbc.Driver";
@@ -57,12 +61,9 @@ public class EconomyHandle {
 	 * @throws SQLException
 	 */
 	public List<EconomyPoJo> selectAll() throws SQLException{
-		
-		
 		List<EconomyPoJo> pojos = new ArrayList<EconomyPoJo>();
 		if(!conn.isClosed()) 
              System.out.println("Succeeded connecting to the Database!");
-
             // statement用来执行SQL语句
             Statement statement = conn.createStatement();
             // 要执行的SQL语句
@@ -84,7 +85,6 @@ public class EconomyHandle {
             	current.setTax(rs.getDouble("tax"));
             	pojos.add(current);
             }
-            
             rs.close();
             return pojos;
    
@@ -120,7 +120,10 @@ public class EconomyHandle {
 		
 	}
 	
-	
+	/**
+	 * 插入月份经济数据到 month表
+	 * @param pojo
+	 */
 	public void insertToEconomyMonth(EconomyPoJo pojo){
 		try {
 			if(!conn.isClosed()) {
@@ -148,6 +151,23 @@ public class EconomyHandle {
 			e.printStackTrace();
 		}
 		
+	}
+	/**
+	 * 讲预测gdp 自变量转化为数组
+	 * @param pojo economypojo 经济数据表
+	 * @return
+	 */
+	public double[] changeGDPAttributeToArray(EconomyPoJo pojo){
+		double[] result = new double[8];
+		result[0] = pojo.getCityGDP();
+		result[1] = pojo.getEnergyConsumePerGDP();
+		result[2] = pojo.getExportTrade();
+		result[3] = pojo.getForeignInvestMent();
+		result[4] = pojo.getGrossRetailSales();
+		result[5] = pojo.getImportExportTrade();
+		result[6] = pojo.getIndustryIncrement();
+		result[7] = pojo.getPopulation();
+		return result;
 	}
 	
 	

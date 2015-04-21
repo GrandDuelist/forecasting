@@ -2,8 +2,13 @@ package cn.com.forecasting.bp;
 
 import java.util.List;
 
+import cn.com.sql.handle.EconomyHandle;
 import cn.com.sql.pojo.EconomyPoJo;
-
+/**
+ * 主要是归一化和反归一化处理
+ * @author zhihan
+ *
+ */
 public class SpecificMath {
 	
 	private double[] xMin;
@@ -27,7 +32,8 @@ public class SpecificMath {
 	 * @return
 	 */
 	public double[] normalizeX(EconomyPoJo pojo){
-		double[] current = pojo.changeAttributeToArray();
+		EconomyHandle handle = new EconomyHandle();
+		double[] current = handle.changeGDPAttributeToArray(pojo);
 		double[] result = new double[this.xNumber];
 		for(int i=0;i<this.xNumber;i++){
 			result[i] = (current[i]-this.xMin[i])/(this.xMax[i]-this.xMin[i]);
@@ -49,8 +55,8 @@ public class SpecificMath {
 	 * @param pojos
 	 */
 	public void calculateMaxMinOfXY(List<EconomyPoJo> pojos){
-		
-		double[] init = pojos.get(0).changeAttributeToArray();
+		EconomyHandle handle = new EconomyHandle();
+		double[] init = handle.changeGDPAttributeToArray(pojos.get(0));
 		if(this.xNumber!=init.length){
 			throw new IllegalArgumentException("Size Do Not Match."); 
 		}
@@ -62,7 +68,7 @@ public class SpecificMath {
 		this.yMin = pojos.get(1).getCityGDP();
 		
 		for(int i=0;i<pojos.size()-1;i++){
-			double[] current = pojos.get(i).changeAttributeToArray();
+			double[] current = handle.changeGDPAttributeToArray(pojos.get(i));
 			double currentY = pojos.get(i+1).getCityGDP();
 			
 			for(int j=0; j<this.xNumber;j++){
@@ -83,7 +89,11 @@ public class SpecificMath {
 		}
 	}
 	
-	
+	/**
+	 * 还原被归一的预测值
+	 * @param y
+	 * @return
+	 */
 	public double reverseY(double y){
 		return y*(this.yMax*SpecificMath.ADJUST_TIME-this.yMin)+this.yMin;
 	}

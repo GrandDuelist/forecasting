@@ -3,6 +3,8 @@ package cn.com.forecasting.mullinearregression;
 import java.util.List;
 
 import cn.com.preprocessing.excel.ColumnPoJo;
+import cn.com.sql.handle.EconomyHandle;
+import cn.com.sql.pojo.EconomyPoJo;
 
 public class MultivariableLinearRegression {
 	
@@ -26,25 +28,54 @@ public class MultivariableLinearRegression {
 		for(int i=0;i<numberData;i++){
 			X[i][0] = 1;
 		}
-		
 		for(int i=0; i < numberX-1; i++){	
 			double[] currentX = xColumnPoJo.get(i).getData();
 			for(int j=0; j < numberData; j++){
 				X[j][i+1] = currentX[j];
 			}
 		}
-		
 		double[] coef = this.calRegressionCoef(X, Y, numberX, numberData);
-		
 		for(int i =1; i<numberX;i++){
 			String name = xColumnPoJo.get(i-1).getHeader();
 			System.out.println(name+" 回归系数： "+coef[i]);
+			}
+		return coef;
+	}
+	
+	/**
+	 * 通过EconomyPoJo回归 : 数据存在database  按年回归
+	 * @param pojos 训练集
+	 * @return
+	 */
+	public double[] regressionByYearThroughDatabase(List<EconomyPoJo> pojos){
+		double[] coef=null;
+		if(pojos==null) return coef;
+		
+		EconomyHandle handle = new 	EconomyHandle();
+		int numberX =  handle.changeGDPAttributeToArray(pojos.get(0)).length+1;
+		int numberData = pojos.size()+1;
+		double[][] X = new double[numberX][numberData];  //x为前一年指标
+		double[] Y = new double[numberData];      //此时的y为当年数据
+		for(int i=0;i<numberData;i++){
+			X[i][0] = 1;
+		}
+		for(int i=0;i<numberX-1;i++){
+			double[] currentX = handle.changeGDPAttributeToArray(pojos.get(i));
+			for(int j=0;j<)
 		}
 		
 		return coef;
 	}
 	
-	
+	/**
+	 * 通过economy数据进行预测： 这里是利用上一年数据
+	 * @param pojo  上一年经济数据
+	 * @return 预测年GDP
+	 */
+	public double predictByYearThroughDataBase(EconomyPoJo pojo){
+		double yearGDP=0;
+		return yearGDP;
+	}
 
 	/**
 	 * 对结果进行评价

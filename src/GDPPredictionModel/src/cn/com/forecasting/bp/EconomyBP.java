@@ -2,6 +2,7 @@ package cn.com.forecasting.bp;
 
 import java.util.List;
 
+import cn.com.sql.handle.EconomyHandle;
 import cn.com.sql.pojo.EconomyPoJo;
 
 /**
@@ -23,6 +24,7 @@ public class EconomyBP {
 
 	// 直接通过EconomyPoJo的列表进行训练
 	public void trainByEconomyList(List<EconomyPoJo> pojos, int trainTimes) {
+		EconomyHandle handle = new EconomyHandle();
 		if (this.bp == null) {
 			System.out.println("please init bp at first");
 			return;
@@ -32,7 +34,7 @@ public class EconomyBP {
 			for (int j = 0; j < pojos.size() - 1; j++) {
 				EconomyPoJo currentPojo = pojos.get(j);
 				EconomyPoJo nextPojo = pojos.get(j + 1);
-				double[] currentX = currentPojo.changeAttributeToArray();
+				double[] currentX = handle.changeGDPAttributeToArray(currentPojo);
 				double[] target = new double[1];
 				target[0] = nextPojo.getCityGDP();
 				this.bp.train(currentX, target);
@@ -43,7 +45,7 @@ public class EconomyBP {
 
 			EconomyPoJo currentPojo = pojos.get(j);
 			EconomyPoJo nextPojo = pojos.get(j + 1);
-			double[] currentX = currentPojo.changeAttributeToArray();
+			double[] currentX = handle.changeGDPAttributeToArray(currentPojo);
 			double[] target = new double[1];
 			target[0] = nextPojo.getCityGDP();
 			double[] result = this.bp.test(currentX);
