@@ -10,6 +10,7 @@ public class EconomyPoJo {
 	private double grossRetailSales; //社会消费品零售总额
 	private double importExportTrade; //进出口贸易总额
 	private double industryIncrement; //工业增加值
+	private int month;  //月份
 	
 	
 	public EconomyPoJo(){}	
@@ -84,7 +85,12 @@ public class EconomyPoJo {
 	public void setIndustryIncrement(double industryIncrement) {
 		this.industryIncrement = industryIncrement;
 	}
-	
+	public void setMonth(int month){
+		this.month=month;
+	}
+	public int getMonth(){
+		return this.month;
+	}
 	
 	public double[] changeAttributeToArray(){
 		double[] result = new double[8];
@@ -98,6 +104,5 @@ public class EconomyPoJo {
 		result[7] = this.foreignInvestMent;
 		return result;
 	}
-	
-	
+		
 }

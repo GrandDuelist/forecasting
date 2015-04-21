@@ -9,15 +9,16 @@ import cn.com.preprocessing.excel.ColumnPoJo;
 import cn.com.preprocessing.excel.ExcelReader;
 import cn.com.preprocessing.math.MathCalculation;
 import cn.com.sql.handle.EconomyHandle;
+import cn.com.sql.pojo.EconomyPoJo;
 
 public class SqlTest {
 	
 	public static void main(String[] args){
 		EconomyHandle handle = new EconomyHandle();
 		try {
-		/*	handle.connect();
-			handle.selectAll();
-			handle.close();*/
+			handle.connect();
+			List<EconomyPoJo> ecs = handle.selectAll();
+			handle.close();
 			
 			//插入excel数据到sql
 		/*

@@ -38,8 +38,7 @@ public class AttributeFilter {
 			}
 			
 			System.out.println(compare.getHeader()+"  "+compare.getCoefficient());
-		}
-									
+		}								
 		return columns;
 		
 	}
