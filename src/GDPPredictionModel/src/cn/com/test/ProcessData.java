@@ -20,7 +20,10 @@ public class ProcessData {
 			for(int i=1;i<economies.size();i++){
 				EconomyPoJo pre = economies.get(i-1);
 				EconomyPoJo current = economies.get(i);
-				changeYearToMonthEconomy(pre,current);
+				EconomyPoJo[] pojos= changeYearToMonthEconomy(pre,current);
+				EconomyPoJo pojo =pojos[1];
+				pojo.changeAttributeToArray();
+				
 			}
 			
 		} catch (SQLException e) {
@@ -82,7 +85,7 @@ public class ProcessData {
 		double[] data = null;
 		// 12*initial + 11*0.05 = yearData
 		double initial  = (yearData - 11*slope)/12;
-		data = generateData(initial,12,slope,yearData/120);
+		data = generateData(initial,12,slope,slope/10);
 		return data;
 	}
 	

@@ -119,9 +119,6 @@ public class EconomyHandle {
 		
 	}
 	
-	public void printEconomyPoJo(EconomyPoJo pojo){
-		
-	}
 	
 	
 }
