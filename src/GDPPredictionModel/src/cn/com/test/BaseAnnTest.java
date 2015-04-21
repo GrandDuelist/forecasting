@@ -41,7 +41,6 @@ public class BaseAnnTest {
 			handle.connect();
 			pojos = handle.selectAll();
 			handle.close();
-			
 			EconomyBP bp = new EconomyBP(8,4,1);
 		//	bp.trainByEconomyList(pojos, 200);
 			bp.trainByNormalizedEconomy(pojos, 50000);
