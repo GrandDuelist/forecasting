@@ -53,16 +53,29 @@ public class MultivariableLinearRegression {
 		
 		EconomyHandle handle = new 	EconomyHandle();
 		int numberX =  handle.changeGDPAttributeToArray(pojos.get(0)).length+1;
-		int numberData = pojos.size()+1;
-		double[][] X = new double[numberX][numberData];  //x为前一年指标
+		int numberData = pojos.size()-1;
+		double[][] X = new double[numberData][numberX];  //x为前一年指标
 		double[] Y = new double[numberData];      //此时的y为当年数据
+
+		for(int i=1;i<pojos.size();i++){
+			Y[i-1] = pojos.get(i).getCityGDP();
+		}
+		
 		for(int i=0;i<numberData;i++){
 			X[i][0] = 1;
 		}
-		for(int i=0;i<numberX-1;i++){
-			double[] currentX = handle.changeGDPAttributeToArray(pojos.get(i));
-			for(int j=0;j<)
+		for(int i=0;i<numberData;i++){
+			double[] currentYear = handle.changeGDPAttributeToArray(pojos.get(i));
+			for(int j=0;j<numberX-1;j++){
+				X[i][j+1] = currentYear[j];
+			}
 		}
+		
+		coef = this.calRegressionCoef(X, Y, numberX, numberData);
+		for(int i =0; i<numberX;i++){
+			
+			System.out.println(" 回归系数： "+coef[i]);
+			}
 		
 		return coef;
 	}
@@ -72,8 +85,13 @@ public class MultivariableLinearRegression {
 	 * @param pojo  上一年经济数据
 	 * @return 预测年GDP
 	 */
-	public double predictByYearThroughDataBase(EconomyPoJo pojo){
+	public double predictByYearThroughDataBase(EconomyPoJo pojo,double []coef){
 		double yearGDP=0;
+		double[] X= new EconomyHandle().changeGDPAttributeToArray(pojo);
+		for(int i=1;i<X.length+1;i++){
+			yearGDP = yearGDP + X[i-1]*coef[i];
+		}
+		yearGDP = yearGDP+coef[0];
 		return yearGDP;
 	}
 

@@ -23,13 +23,16 @@ public class RegressionTest {
 		MathCalculation ma = new MathCalculation();
 		MultivariableLinearRegression regression = new MultivariableLinearRegression();
 		try {
-			reader.readExcelFile();
+		//	reader.readExcelFile();
 			/*List<ColumnPoJo> xColumnPoJo = filter.getAllDataWithCoefficient("上海", 6);
 			ColumnPoJo yColumnPoJo = reader.getTargetCol("上海", 6);*/
 			EconomyHandle handle = new EconomyHandle();
 			handle.connect();
 			List<EconomyPoJo> pojos = handle.selectAll();
 			handle.close();
+			
+			// 分支1
+			/*
 			ColumnPoJo yColumnPoJo = new ColumnPoJo();
 			List<ColumnPoJo> xColumnPoJo = reader.transFromSqlToColumn(pojos, yColumnPoJo);
 			
@@ -40,6 +43,12 @@ public class RegressionTest {
 			ColumnPoJo result = new ColumnPoJo();
 			regression.evaluation(xColumnPoJo, yColumnPoJo, result, coef);
 			reader.closeInputStream();
+			*/
+			
+			//分支2
+			 double[] coef = regression.regressionByYearThroughDatabase(pojos);
+			 double yearGDP=regression.predictByYearThroughDataBase(pojos.get(pojos.size()-3), coef);
+			 System.out.println(yearGDP);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

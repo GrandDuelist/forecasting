@@ -22,7 +22,6 @@ public class ProcessData {
 				EconomyPoJo current = economies.get(i);
 				EconomyPoJo[] pojos= changeYearToMonthEconomy(pre,current);
 				insertMonthDataToDatabase(pojos,handle);
-				
 			}
 			
 		} catch (SQLException e) {
@@ -32,9 +31,12 @@ public class ProcessData {
 		
 		handle.close();
 	}
-	
+	/**
+	 * 插入月份数据到数据库中
+	 * @param pojos
+	 * @param handle
+	 */
 	public static void insertMonthDataToDatabase(EconomyPoJo[] pojos,EconomyHandle handle){
-		
 		for(int i=0;i<pojos.length;i++){
 			EconomyPoJo pojo = pojos[i];
 			handle.insertToEconomyMonth(pojo);
