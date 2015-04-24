@@ -46,8 +46,8 @@ public class RegressionTest {
 			*/
 			
 			//分支2
-			 double[] coef = regression.regressionByYearThroughDatabase(pojos);
-			 double yearGDP=regression.predictByYearThroughDataBase(pojos.get(pojos.size()-3), coef);
+			 double[] coef = regression.regressionThroughDatabase(pojos);
+			 double yearGDP=regression.predictThroughDataBase(pojos.get(pojos.size()-3), coef);
 			 System.out.println(yearGDP);
 
 		} catch (Exception e) {

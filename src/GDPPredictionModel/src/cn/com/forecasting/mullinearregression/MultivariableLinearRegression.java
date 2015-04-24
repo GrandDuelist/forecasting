@@ -47,7 +47,7 @@ public class MultivariableLinearRegression {
 	 * @param pojos 训练集
 	 * @return
 	 */
-	public double[] regressionByYearThroughDatabase(List<EconomyPoJo> pojos){
+	public double[] regressionThroughDatabase(List<EconomyPoJo> pojos){
 		double[] coef=null;
 		if(pojos==null) return coef;
 		
@@ -85,7 +85,7 @@ public class MultivariableLinearRegression {
 	 * @param pojo  上一年经济数据
 	 * @return 预测年GDP
 	 */
-	public double predictByYearThroughDataBase(EconomyPoJo pojo,double []coef){
+	public double predictThroughDataBase(EconomyPoJo pojo,double []coef){
 		double yearGDP=0;
 		double[] X= new EconomyHandle().changeGDPAttributeToArray(pojo);
 		for(int i=1;i<X.length+1;i++){
@@ -208,7 +208,6 @@ public class MultivariableLinearRegression {
 		
 		return result;
 	}
-	
 	
 	/**
 	 * 计算X'Y每个元 i 所需的向量

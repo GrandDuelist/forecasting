@@ -1,16 +1,34 @@
 package cn.com.sql.handle;
 
+import java.util.List;
+
+import cn.com.sql.pojo.EconomyPoJo;
+
 public interface EconomyBIService {
 	/**
-	 * 多远线性回归
+	 * 历史数据的多元线性回归， 计算相关系数
+	 * @param year 要预测的年份
+	 * @return  相关系数
+	 */
+	public double[] yearRegression(int year);
+	public double yearRegressionPredict(int year, double[] coef);
+	public double[] monthRegression(int year, int month);
+	public double monthRegressionPredict(int year,int month,double[] coef);
+	
+	/**
+	 * 真实的年份经济数据
+	 * @param year
 	 * @return
 	 */
-	public double[] yearRegression();
-	public double yearRegressionPredict();
-	public double[] monthRegression();
+	public double realYearValue(int year);
 	
-	public double[] realYearValue();
-	public double[] realMonthValue();
+	/**
+	 * 真实的月份经济数据
+	 * @param year 年份
+	 * @param month 月份
+	 * @return  当月的GPD值
+	 */
+	public double realMonthValue(int year, int month);
 	
 	public double[] yearBPTrain();
 	public double[] monthBPTrain();

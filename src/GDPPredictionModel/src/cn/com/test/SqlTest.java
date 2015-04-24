@@ -1,13 +1,5 @@
 package cn.com.test;
 
-import java.sql.SQLException;
-import java.util.List;
-
-import cn.com.forecasting.mullinearregression.MultivariableLinearRegression;
-import cn.com.preprocessing.AttributeFilter;
-import cn.com.preprocessing.excel.ColumnPoJo;
-import cn.com.preprocessing.excel.ExcelReader;
-import cn.com.preprocessing.math.MathCalculation;
 import cn.com.sql.handle.EconomyHandle;
 import cn.com.sql.pojo.EconomyPoJo;
 
@@ -17,7 +9,10 @@ public class SqlTest {
 		EconomyHandle handle = new EconomyHandle();
 		try {
 			handle.connect();
-			List<EconomyPoJo> ecs = handle.selectAll();
+			/*List<EconomyPoJo> ecs = handle.selectPreviousYear(1988);*/
+			EconomyPoJo pojo = handle.selectMonthEconomy(1988,8);
+//			System.out.println(ecs.size());
+			
 			handle.close();
 			
 			//插入excel数据到sql
