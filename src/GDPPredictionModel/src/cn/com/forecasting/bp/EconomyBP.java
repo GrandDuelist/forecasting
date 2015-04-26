@@ -126,7 +126,7 @@ public class EconomyBP {
 			}
 		}
 		
-		
+		/*
 		//训练测试集
 		for (int j = 0; j < test.size() - 1; j++) {
 
@@ -139,7 +139,7 @@ public class EconomyBP {
 			System.out.println("预测值 " + preprocessing.reverseY(result[0]) + "  实际值 " + nextPojo.getCityGDP()+  "误差： 百分之"+ 
 					100*Math.abs((preprocessing.reverseY(result[0])-nextPojo.getCityGDP())/nextPojo.getCityGDP()));
 		}
-
+*/
 	}
 	
 	
