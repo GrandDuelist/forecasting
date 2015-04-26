@@ -98,6 +98,49 @@ public class EconomyBP {
 
 	}
 	
+	/**
+	 * 
+	 * @param pojos
+	 * @param trainTimes
+	 */
+	public void trainOnlyByNormalizedEconomy(List<EconomyPoJo> pojos,int trainTimes){
+		if (this.bp == null) {
+			System.out.println("please init bp at first");
+			return;
+		}
+		
+		SpecificMath preprocessing = new SpecificMath(this.inputSize);
+		preprocessing.calculateMaxMinOfXY(pojos);
+
+		// 对数据进行训练
+		for (int i = 0; i < trainTimes; i++) {
+			for (int j = 0; j < pojos.size() - 1; j++) {
+				EconomyPoJo currentPojo = pojos.get(j);
+				EconomyPoJo nextPojo = pojos.get(j + 1);
+				double[] currentX = preprocessing.normalizeX(currentPojo);
+				double[] target = new double[1];
+				target[0] = preprocessing.normalizeY(nextPojo.getCityGDP());
+				this.bp.train(currentX, target);
+			}
+		}
+		
+	}
+	
+	/**
+	 * output the weight of bp to file 
+	 * @param year target year 
+	 */
+	public void outputBpWeightToFile(int year){
+		
+	}
+	/**
+	 * output the the year and month of bp to file
+	 * @param year  target year
+	 * @param month target month 
+	 */
+	public void outputBpWeightToFile(int year, int month){
+		
+	}
 	
 	/**
 	 * seperate normalize the economy and train networks
@@ -126,7 +169,7 @@ public class EconomyBP {
 			}
 		}
 		
-		/*
+		
 		//训练测试集
 		for (int j = 0; j < test.size() - 1; j++) {
 
@@ -139,7 +182,6 @@ public class EconomyBP {
 			System.out.println("预测值 " + preprocessing.reverseY(result[0]) + "  实际值 " + nextPojo.getCityGDP()+  "误差： 百分之"+ 
 					100*Math.abs((preprocessing.reverseY(result[0])-nextPojo.getCityGDP())/nextPojo.getCityGDP()));
 		}
-*/
 	}
 	
 	
