@@ -5,7 +5,8 @@ public class EconomyServiceBITest {
 	public static void main(String[] args){
 		EconomyBIServiceImp service = new EconomyBIServiceImp();
 		try {
-			System.out.println(service.bpPredict(2011));
+			//service.train();
+			System.out.println(service.bpPredict(2012));
 			System.out.println(service.bpPredict(2010));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

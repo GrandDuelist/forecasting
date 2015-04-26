@@ -228,7 +228,7 @@ public class EconomyBIServiceImp implements EconomyBIService {
 		EconomyPoJo pojo = handle.selectYearEconomy(year-1);//前一年的
 		handle.close();
 		this.bp.readBaseBpFromFile(year); //读取该年的权值数据
-		return this.bp.test(pojo)[0];
+		return this.bp.bp.preprocessing.reverseY(bp.test(pojo)[0]);
 		
 	}
 	public double bpPredict(int year, int month) throws Exception{
@@ -236,6 +236,6 @@ public class EconomyBIServiceImp implements EconomyBIService {
 		EconomyPoJo pojo = handle.selectMonthEconomy(year-1, month);
 		handle.close();
 		this.bp.readBaseBpFromFile(year,month); //读取该年的权值数据
-		return this.bp.test(pojo)[0];
+		return this.bp.bp.preprocessing.reverseY(bp.test(pojo)[0]);
 	}
 }

@@ -1,5 +1,6 @@
 package cn.com.forecasting.bp;
 
+import java.io.Serializable;
 import java.util.List;
 
 import cn.com.sql.handle.EconomyHandle;
@@ -9,7 +10,7 @@ import cn.com.sql.pojo.EconomyPoJo;
  * @author zhihan
  *
  */
-public class SpecificMath {
+public class SpecificMath implements Serializable {
 	
 	private double[] xMin;
 	private double[] xMax;

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class BaseAnn implements Serializable {
-	
+	public SpecificMath preprocessing = null;
 	//输入层
 	private double[] input;
 	//隐藏层

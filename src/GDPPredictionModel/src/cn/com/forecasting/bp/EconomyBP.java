@@ -114,17 +114,17 @@ public class EconomyBP {
 			return;
 		}
 		
-		SpecificMath preprocessing = new SpecificMath(this.inputSize);
-		preprocessing.calculateMaxMinOfXY(pojos);
+		this.bp.preprocessing = new SpecificMath(this.inputSize);
+		this.bp.preprocessing.calculateMaxMinOfXY(pojos);
 
 		// 对数据进行训练
 		for (int i = 0; i < trainTimes; i++) {
 			for (int j = 0; j < pojos.size() - 1; j++) {
 				EconomyPoJo currentPojo = pojos.get(j);
 				EconomyPoJo nextPojo = pojos.get(j + 1);
-				double[] currentX = preprocessing.normalizeX(currentPojo);
+				double[] currentX = this.bp.preprocessing.normalizeX(currentPojo);
 				double[] target = new double[1];
-				target[0] = preprocessing.normalizeY(nextPojo.getCityGDP());
+				target[0] = this.bp.preprocessing.normalizeY(nextPojo.getCityGDP());
 				this.bp.train(currentX, target);
 			}
 		}
@@ -205,17 +205,17 @@ public class EconomyBP {
 			return;
 		}
 		
-		SpecificMath preprocessing = new SpecificMath(this.inputSize);
-		preprocessing.calculateMaxMinOfXY(pojos);
+		this.bp.preprocessing = new SpecificMath(this.inputSize);
+		this.bp.preprocessing.calculateMaxMinOfXY(pojos);
 
 		// 对数据进行训练
 		for (int i = 0; i < trainTimes; i++) {
 			for (int j = 0; j < pojos.size() - 1; j++) {
 				EconomyPoJo currentPojo = pojos.get(j);
 				EconomyPoJo nextPojo = pojos.get(j + 1);
-				double[] currentX = preprocessing.normalizeX(currentPojo);
+				double[] currentX = this.bp.preprocessing.normalizeX(currentPojo);
 				double[] target = new double[1];
-				target[0] = preprocessing.normalizeY(nextPojo.getCityGDP());
+				target[0] = this.bp.preprocessing.normalizeY(nextPojo.getCityGDP());
 				this.bp.train(currentX, target);
 			}
 		}
@@ -226,18 +226,17 @@ public class EconomyBP {
 
 			EconomyPoJo currentPojo = test.get(j);
 			EconomyPoJo nextPojo = test.get(j + 1);
-			double[] currentX = preprocessing.normalizeX(currentPojo);
+			double[] currentX = this.bp.preprocessing.normalizeX(currentPojo);
 			double[] target = new double[1];
-			target[0] = preprocessing.normalizeY(nextPojo.getCityGDP());
+			target[0] = this.bp.preprocessing.normalizeY(nextPojo.getCityGDP());
 			double[] result = this.bp.test(currentX);
-			System.out.println("预测值 " + preprocessing.reverseY(result[0]) + "  实际值 " + nextPojo.getCityGDP()+  "误差： 百分之"+ 
-					100*Math.abs((preprocessing.reverseY(result[0])-nextPojo.getCityGDP())/nextPojo.getCityGDP()));
+			System.out.println("预测值 " + this.bp.preprocessing.reverseY(result[0]) + "  实际值 " + nextPojo.getCityGDP()+  "误差： 百分之"+ 
+					100*Math.abs((this.bp.preprocessing.reverseY(result[0])-nextPojo.getCityGDP())/nextPojo.getCityGDP()));
 		}
 	}
 	
 	public  double[] test(EconomyPoJo pojo){
-		SpecificMath preprocessing = new SpecificMath(DataMapping.numberX);
-		double[] currentX = preprocessing.normalizeX(pojo);
+		double[] currentX = this.bp.preprocessing.normalizeX(pojo);
 		double[] result = this.bp.test(currentX);
 		return result;
 	}
