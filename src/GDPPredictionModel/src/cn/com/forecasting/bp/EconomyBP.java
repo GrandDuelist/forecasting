@@ -1,5 +1,7 @@
 package cn.com.forecasting.bp;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import cn.com.sql.handle.EconomyHandle;
@@ -129,9 +131,18 @@ public class EconomyBP {
 	/**
 	 * output the weight of bp to file 
 	 * @param year target year 
+	 * @throws IOException 
 	 */
-	public void outputBpWeightToFile(int year){
+	public boolean outputBpWeightToFile(int year) throws IOException{
+		boolean isExisted = false;
+		File file = new File("../data/bpweight/"+year+".txt");
+		//file existed
+		if(file.exists()){
+			return true;
+		}
+		file.createNewFile();
 		
+		return isExisted;
 	}
 	/**
 	 * output the the year and month of bp to file
