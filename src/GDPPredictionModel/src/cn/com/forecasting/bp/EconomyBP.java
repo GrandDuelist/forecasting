@@ -58,8 +58,8 @@ public class EconomyBP {
 	/**
 	 * normalize the economy and train networks
 	 * 
-	 * @param pojos
-	 * @param trainTimes
+	 * @param pojos 
+	 * @param trainTimes 
 	 */
 	public void trainByNormalizedEconomy(List<EconomyPoJo> pojos, int trainTimes) {
 		if (this.bp == null) {

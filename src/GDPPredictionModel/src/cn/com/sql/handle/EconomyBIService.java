@@ -29,7 +29,10 @@ public interface EconomyBIService {
 	 * @return  当月的GPD值
 	 */
 	public double realMonthValue(int year, int month);
-	
+	/**
+	 * 对年份数据进行训练，然后得出阈值和权值
+	 * @return
+	 */
 	public double[] yearBPTrain();
 	public double[] monthBPTrain();
 	

@@ -86,6 +86,9 @@ public class EconomyBIServiceImp implements EconomyBIService {
 		return predictGDP;
 	}
 
+	/**
+	 * 真实年份数据
+	 */
 	@Override
 	public double realYearValue(int year) {
 		// TODO Auto-generated method stub
@@ -101,7 +104,10 @@ public class EconomyBIServiceImp implements EconomyBIService {
 		}
 		return gdp;
 	}
-
+	
+	/**
+	 * 真实月份数据
+	 */
 	@Override
 	public double realMonthValue(int year, int month) {
 		// TODO Auto-generated method stub
