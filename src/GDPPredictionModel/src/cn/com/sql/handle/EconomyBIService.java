@@ -33,8 +33,15 @@ public interface EconomyBIService {
 	 * 对年份数据进行训练，然后得出阈值和权值
 	 * @return
 	 */
-	public double[] yearBPTrain();
-	public double[] monthBPTrain();
+	public double yearBPTrain(int year);
+	
+	/**
+	 * 对月份数据进行训练
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	public double monthBPTrain(int year, int month);
 	
 	
 }

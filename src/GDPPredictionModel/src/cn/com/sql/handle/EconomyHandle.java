@@ -21,7 +21,7 @@ import cn.com.sql.pojo.EconomyPoJo;
 
 public class EconomyHandle {
 	public String driver = "com.mysql.jdbc.Driver";
-	public String url = "jdbc:mysql://10.60.36.74:3306/forecasting";
+	public String url = "jdbc:mysql://localhost:3306/forecasting";
 	public String user = "root";
 	public String psword = "wancar";
 	Connection conn;
