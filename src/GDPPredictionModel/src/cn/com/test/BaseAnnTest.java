@@ -37,11 +37,11 @@ public class BaseAnnTest {
 		EconomyHandle handle = new EconomyHandle();
 		
 		//神经网络训练测试
-	/*  
+	 
 		List<EconomyPoJo> pojos;
 		try {
 			handle.connect();
-			pojos = handle.selectAll();
+			pojos = handle.selectAllYear();
 			handle.close();
 			EconomyBP bp = new EconomyBP(8,4,1);
 		//	bp.trainByEconomyList(pojos, 200);
@@ -51,9 +51,9 @@ public class BaseAnnTest {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		
-		
+	/*	
 		//权值输出测试  保存权值到文件中
 		EconomyBP bp = new EconomyBP(8,4,1);
 		EconomyBP bp2 = new EconomyBP(8,4,1);
@@ -68,6 +68,6 @@ public class BaseAnnTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		*/
 	}
 }
