@@ -1,8 +1,9 @@
 package cn.com.forecasting.bp;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class BaseAnn {
+public class BaseAnn implements Serializable {
 	
 	//输入层
 	private double[] input;
@@ -36,6 +37,12 @@ public class BaseAnn {
 	private Random random; //生成
 	
 	
+	public double[][] getIptHidWeights(){
+		return this.iptHidPreUptWeights;
+	}
+	public double[][] getHidOptWeights(){
+		return this.hidOptPreUptWeights;
+	}
 	
 	public BaseAnn(int inputSize, int hiddenSize,int outputSize,double eta,double momentum){
 		

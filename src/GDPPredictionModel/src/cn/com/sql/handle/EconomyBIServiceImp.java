@@ -1,8 +1,10 @@
 package cn.com.sql.handle;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import cn.com.forecasting.bp.DataMapping;
 import cn.com.forecasting.bp.EconomyBP;
 import cn.com.forecasting.mullinearregression.MultivariableLinearRegression;
 import cn.com.sql.pojo.EconomyPoJo;
@@ -11,6 +13,8 @@ public class EconomyBIServiceImp implements EconomyBIService {
 
 	private EconomyHandle handle = new EconomyHandle();
 	private MultivariableLinearRegression regression = new MultivariableLinearRegression();
+	private EconomyBP bp = new EconomyBP(DataMapping.numberX,
+			(int) DataMapping.numberX / 2, DataMapping.numberY);
 
 	/**
 	 * 按年回归 多元线性回归
@@ -151,4 +155,87 @@ public class EconomyBIServiceImp implements EconomyBIService {
 		return result;
 	}
 
+	/**
+	 * 训练所有数据
+	 */
+	public void train() {
+		try {
+			this.trainYear();
+			this.trainMonth();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 对数据库的所有数据进行查询后计算参数，并以对象的方式存在于文件中
+	 * 
+	 * @throws SQLException
+	 */
+	public void trainYear() throws Exception {
+		handle.connect();
+		List<EconomyPoJo> pojos = handle.selectAllYear();
+		handle.close();
+		for (int i = 0; i < pojos.size(); i++) {
+			EconomyPoJo pojo = pojos.get(i);
+			this.trainSpecificYear(pojo.getYear() + 1);
+		}
+	}
+
+	public void trainMonth() throws Exception {
+		handle.connect();
+		List<EconomyPoJo> pojos = handle.selectAllMonth();
+		handle.close();
+		for (int i = 0; i < pojos.size(); i++) {
+			EconomyPoJo pojo = pojos.get(i);
+			this.trainSpecificMonth(pojo.getYear() + 1, pojo.getMonth());
+		}
+	}
+
+	/**
+	 * 指定预测某年数据，训练改年之前的数据并存于本地对象W中
+	 * 
+	 * @param year
+	 * @throws SQLException
+	 * @throws IOException
+	 */
+	public void trainSpecificYear(int year) throws Exception {
+		handle.connect();
+		// 拿到改年的所有数据进行训练
+		List<EconomyPoJo> previousPoJos = handle.selectPreviousYear(year);
+		handle.close();
+		if (previousPoJos.size() > DataMapping.minPreviousDataNumber) {
+			this.bp.trainOnlyByNormalizedEconomy(previousPoJos,
+					DataMapping.bpTrainTime);
+			this.bp.outputBaseBpToFile(year); // 存到硬盘上
+		}
+	}
+
+	public void trainSpecificMonth(int year, int month) throws Exception {
+		handle.connect();
+		List<EconomyPoJo> previousPoJos = handle.selectPreviousYearSameMonth(
+				year, month);
+		handle.close();
+		if (previousPoJos.size() > DataMapping.minPreviousDataNumber) {
+			this.bp.trainOnlyByNormalizedEconomy(previousPoJos,
+					DataMapping.bpTrainTime);
+			this.bp.outputBaseBpToFile(year, month);
+		}
+	}
+	
+	public double bpPredict(int year) throws Exception{
+		handle.connect();
+		EconomyPoJo pojo = handle.selectYearEconomy(year-1);//前一年的
+		handle.close();
+		this.bp.readBaseBpFromFile(year); //读取该年的权值数据
+		return this.bp.test(pojo)[0];
+		
+	}
+	public double bpPredict(int year, int month) throws Exception{
+		handle.connect();
+		EconomyPoJo pojo = handle.selectMonthEconomy(year-1, month);
+		handle.close();
+		this.bp.readBaseBpFromFile(year,month); //读取该年的权值数据
+		return this.bp.test(pojo)[0];
+	}
 }

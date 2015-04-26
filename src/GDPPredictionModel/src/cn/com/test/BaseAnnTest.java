@@ -1,5 +1,6 @@
 package cn.com.test;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class BaseAnnTest {
 				double[] real = new double[4];
 				if(value>=0){
 					
-				}
+				
 			}
 		}*/
 		
@@ -35,7 +36,8 @@ public class BaseAnnTest {
 	//	System.out.println((-Integer.MIN_VALUE));
 		EconomyHandle handle = new EconomyHandle();
 		
-	
+		//神经网络训练测试
+	/*  
 		List<EconomyPoJo> pojos;
 		try {
 			handle.connect();
@@ -49,8 +51,23 @@ public class BaseAnnTest {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
+		
+		//权值输出测试  保存权值到文件中
+		EconomyBP bp = new EconomyBP(8,4,1);
+		EconomyBP bp2 = new EconomyBP(8,4,1);
+		try {
+			handle.connect();
+			List<EconomyPoJo>pojos = handle.selectAllYear();
+			handle.close();
+			bp.trainOnlyByNormalizedEconomy(pojos.subList(0,pojos.size()-1), 10000);
+			bp.outputBaseBpToFile(2012); //训练输出到文件
+			bp2.readBaseBpFromFile(2012); //从文件读取输出
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 }

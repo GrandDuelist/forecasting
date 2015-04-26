@@ -14,7 +14,7 @@ public class ProcessData {
 		handle.connect();
 		
 		try {
-			List<EconomyPoJo> economies = handle.selectAll();
+			List<EconomyPoJo> economies = handle.selectAllYear();
 			
 			//将实际数据打乱按月重组
 			for(int i=1;i<economies.size();i++){

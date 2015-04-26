@@ -1,7 +1,11 @@
 package cn.com.forecasting.bp;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
 import cn.com.sql.handle.EconomyHandle;
@@ -15,7 +19,6 @@ import cn.com.sql.pojo.EconomyPoJo;
  */
 public class EconomyBP {
 	public BaseAnn bp;
-	
 	private int inputSize ;
 	private int outputSize;
 	public EconomyBP(int inputSize, int hiddenSize, int outputSize) {
@@ -133,26 +136,63 @@ public class EconomyBP {
 	 * @param year target year 
 	 * @throws IOException 
 	 */
-	public boolean outputBpWeightToFile(int year) throws IOException{
-		boolean isExisted = false;
-		File file = new File("../data/bpweight/"+year+".txt");
+	public boolean outputBaseBpToFile(int year) throws IOException{
+		boolean isExisted = true;
+		File file = new File(DataMapping.BP_WEIGHT_DIRECTORY+year);
 		//file existed
-		if(file.exists()){
-			return true;
+		if(!file.exists()){
+			file.createNewFile();
+			isExisted = false;
 		}
-		file.createNewFile();
-		
+		//写入对象
+		ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file));
+		os.writeObject(this.bp);
+		os.close();
 		return isExisted;
 	}
-	/**
-	 * output the the year and month of bp to file
-	 * @param year  target year
-	 * @param month target month 
-	 */
-	public void outputBpWeightToFile(int year, int month){
-		
+	public boolean outputBaseBpToFile(int year, int month) throws Exception{
+		boolean isExisted = true;
+		File file = new File(DataMapping.BP_WEIGHT_DIRECTORY+year+"_"+month);
+		if(!file.exists()){
+			file.createNewFile();
+			isExisted = false;
+		}
+		//写入对象
+		ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file));
+		os.writeObject(this.bp);
+		os.close();
+		return isExisted;
 	}
 	
+	/**
+	 * 从文件读取bp对象
+	 * @param year
+	 * @throws IOException
+	 * @throws ClassNotFoundException 
+	 * @return 文件是否存在，不存在返回false
+	 */
+	public boolean readBaseBpFromFile(int year) throws IOException, ClassNotFoundException{
+		boolean isExisted = true;
+		File file = new File(DataMapping.BP_WEIGHT_DIRECTORY+year);
+		//file existed
+		if(!file.exists()){
+			isExisted = false; return isExisted;
+		}
+		ObjectInputStream is = new ObjectInputStream(new FileInputStream(file));
+		this.bp = (BaseAnn)is.readObject();
+		return isExisted;
+	}
+	
+	public boolean readBaseBpFromFile(int year,int month) throws Exception {
+		boolean isExisted = true;
+		File file = new File(DataMapping.BP_WEIGHT_DIRECTORY+year+"_"+month);
+		if(!file.exists()){
+			isExisted=false; return isExisted;
+		}
+		ObjectInputStream is = new ObjectInputStream(new FileInputStream(file));
+		this.bp = (BaseAnn)is.readObject();
+		return isExisted;
+	}
 	/**
 	 * seperate normalize the economy and train networks
 	 * 
@@ -195,6 +235,11 @@ public class EconomyBP {
 		}
 	}
 	
-	
+	public  double[] test(EconomyPoJo pojo){
+		SpecificMath preprocessing = new SpecificMath(DataMapping.numberX);
+		double[] currentX = preprocessing.normalizeX(pojo);
+		double[] result = this.bp.test(currentX);
+		return result;
+	}
 
 }

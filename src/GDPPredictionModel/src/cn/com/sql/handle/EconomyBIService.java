@@ -1,5 +1,6 @@
 package cn.com.sql.handle;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import cn.com.sql.pojo.EconomyPoJo;
@@ -42,6 +43,14 @@ public interface EconomyBIService {
 	 * @return
 	 */
 	public double monthBPTrain(int year, int month);
+	
+	/**
+	 * 训练数据库的所有数据
+	 * @return
+	 * @throws SQLException 
+	 */
+	public void trainYear() throws Exception;
+	public void trainMonth() throws Exception;
 	
 	
 }

@@ -28,7 +28,7 @@ public class RegressionTest {
 			ColumnPoJo yColumnPoJo = reader.getTargetCol("上海", 6);*/
 			EconomyHandle handle = new EconomyHandle();
 			handle.connect();
-			List<EconomyPoJo> pojos = handle.selectAll();
+			List<EconomyPoJo> pojos = handle.selectAllYear();
 			handle.close();
 			
 			// 分支1

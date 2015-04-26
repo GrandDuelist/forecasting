@@ -63,7 +63,7 @@ public class EconomyHandle {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<EconomyPoJo> selectAll() throws SQLException {
+	public List<EconomyPoJo> selectAllYear() throws SQLException {
 		List<EconomyPoJo> pojos = new ArrayList<EconomyPoJo>();
 		if (!conn.isClosed())
 			System.out.println("Succeeded connecting to the Database!");
@@ -71,6 +71,43 @@ public class EconomyHandle {
 		Statement statement = conn.createStatement();
 		// 要执行的SQL语句
 		String sql = "select * from economy";
+		// 结果集
+		ResultSet rs = statement.executeQuery(sql);
+		while (rs.next()) {
+			EconomyPoJo current = new EconomyPoJo();
+			current.setMonth(rs.getInt("month"));
+			current.setYear(rs.getInt("year"));
+			current.setCityGDP(rs.getDouble("city_gdp"));
+			current.setPopulation(rs.getDouble("population"));
+			current.setEnergyConsumePerGDP(rs
+					.getDouble("energy_consume_per_gdp"));
+			current.setForeignInvestMent(rs.getDouble("foreign_investment"));
+			current.setExportTrade(rs.getDouble("export_trade"));
+			current.setGrossRetailSales(rs.getDouble("retail_sale"));
+			current.setImportExportTrade(rs.getDouble("import_export_trade"));
+			current.setIndustryIncrement(rs.getDouble("industry_increment"));
+			current.setTax(rs.getDouble("tax"));
+			pojos.add(current);
+		}
+		rs.close();
+		return pojos;
+
+	}
+	
+	/**
+	 * 数据库全查
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<EconomyPoJo> selectAllMonth() throws SQLException {
+		List<EconomyPoJo> pojos = new ArrayList<EconomyPoJo>();
+		if (!conn.isClosed())
+			System.out.println("Succeeded connecting to the Database!");
+		// statement用来执行SQL语句
+		Statement statement = conn.createStatement();
+		// 要执行的SQL语句
+		String sql = "select * from economy_month";
 		// 结果集
 		ResultSet rs = statement.executeQuery(sql);
 		while (rs.next()) {
