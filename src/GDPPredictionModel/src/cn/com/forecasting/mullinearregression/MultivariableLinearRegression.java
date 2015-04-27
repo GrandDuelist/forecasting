@@ -72,10 +72,10 @@ public class MultivariableLinearRegression {
 		}
 		
 		coef = this.calRegressionCoef(X, Y, numberX, numberData);
-		for(int i =0; i<numberX;i++){
+	/*	for(int i =0; i<numberX;i++){
 			
 			System.out.println(" 回归系数： "+coef[i]);
-			}
+			}*/
 		
 		return coef;
 	}

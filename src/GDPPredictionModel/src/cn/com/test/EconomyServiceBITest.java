@@ -6,8 +6,9 @@ public class EconomyServiceBITest {
 		EconomyBIServiceImp service = new EconomyBIServiceImp();
 		try {
 			//service.train();
-			System.out.println(service.bpPredict(2012));
-			System.out.println(service.bpPredict(2010));
+			System.out.println(service.bpPredict(2004));
+			System.out.println(service.regressionPredict(2013,11));
+			System.out.println(service.bpPredict(2013,11));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

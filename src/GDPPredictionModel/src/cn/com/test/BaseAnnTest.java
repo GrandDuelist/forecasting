@@ -47,7 +47,7 @@ public class BaseAnnTest {
 		//	bp.trainByEconomyList(pojos, 200);
 			bp.trainByNormalizedEconomy(pojos, 10000);
 			System.out.println();
-			bp.trainByNormalizedEconomy(pojos.subList(0,pojos.size()-1),pojos.subList(pojos.size()-2, pojos.size()),10000);
+			bp.trainByNormalizedEconomy(pojos.subList(0,pojos.size()-3),pojos.subList(pojos.size()-4, pojos.size()),10000);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

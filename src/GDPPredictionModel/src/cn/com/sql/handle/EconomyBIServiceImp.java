@@ -92,6 +92,16 @@ public class EconomyBIServiceImp implements EconomyBIService {
 		}
 		return predictGDP;
 	}
+	
+	public double regressionPredict(int year, int month){
+		double[] coef = this.monthRegression(year, month);
+		return this.monthRegressionPredict(year, month, coef);
+	}
+	
+	public double regressionPredict(int year){
+		double[] coef = this.yearRegression(year);
+		return this.yearRegressionPredict(year, coef);
+	}
 
 	/**
 	 * 真实年份数据
@@ -237,5 +247,15 @@ public class EconomyBIServiceImp implements EconomyBIService {
 		handle.close();
 		this.bp.readBaseBpFromFile(year,month); //读取该年的权值数据
 		return this.bp.bp.preprocessing.reverseY(bp.test(pojo)[0]);
+	}
+	
+	/**
+	 * 计算误差
+	 * @param realValue
+	 * @param predictValue
+	 * @return
+	 */
+	public double aberration(double realValue, double predictValue){
+		return (Math.abs(realValue-predictValue)/realValue)*100;
 	}
 }
