@@ -9,7 +9,7 @@ import cn.com.forecasting.bp.EconomyBP;
 import cn.com.forecasting.mullinearregression.MultivariableLinearRegression;
 import cn.com.sql.pojo.EconomyPoJo;
 
-public class EconomyBIServiceImp implements EconomyBIService {
+public class EconomyBIServiceImp implements GDPBIService,TaxBIService {
 
 	private EconomyHandle handle = new EconomyHandle();
 	private MultivariableLinearRegression regression = new MultivariableLinearRegression();
@@ -19,7 +19,6 @@ public class EconomyBIServiceImp implements EconomyBIService {
 	/**
 	 * 按年回归 多元线性回归
 	 */
-	@Override
 	public double[] yearRegression(int year) {
 		// TODO Auto-generated method stub
 		double coef[] = null;
@@ -38,7 +37,6 @@ public class EconomyBIServiceImp implements EconomyBIService {
 	/**
 	 * 按年预测 多元线性回归
 	 */
-	@Override
 	public double yearRegressionPredict(int year, double[] coef) {
 		// TODO Auto-generated method stub
 		double predictGDP = 0;
@@ -57,7 +55,6 @@ public class EconomyBIServiceImp implements EconomyBIService {
 	/**
 	 * 按月回归 多元线性回归
 	 */
-	@Override
 	public double[] monthRegression(int year, int month) {
 		// TODO Auto-generated method stub
 		double[] coef = null;
@@ -77,7 +74,7 @@ public class EconomyBIServiceImp implements EconomyBIService {
 	/**
 	 * 按月预测 多元线性回归
 	 */
-	@Override
+	
 	public double monthRegressionPredict(int year, int month, double[] coef) {
 		// TODO Auto-generated method stub
 		double predictGDP = 0;
@@ -93,12 +90,13 @@ public class EconomyBIServiceImp implements EconomyBIService {
 		return predictGDP;
 	}
 	
-	public double regressionPredict(int year, int month){
+	@Override
+	public double regressionPredictGDP(int year, int month){
 		double[] coef = this.monthRegression(year, month);
 		return this.monthRegressionPredict(year, month, coef);
 	}
-	
-	public double regressionPredict(int year){
+	@Override
+	public double regressionPredictGDP(int year){
 		double[] coef = this.yearRegression(year);
 		return this.yearRegressionPredict(year, coef);
 	}
@@ -107,7 +105,7 @@ public class EconomyBIServiceImp implements EconomyBIService {
 	 * 真实年份数据
 	 */
 	@Override
-	public double realYearValue(int year) {
+	public double realYearValueGDP(int year) {
 		// TODO Auto-generated method stub
 		double gdp = 0;
 		try {
@@ -126,7 +124,7 @@ public class EconomyBIServiceImp implements EconomyBIService {
 	 * 真实月份数据
 	 */
 	@Override
-	public double realMonthValue(int year, int month) {
+	public double realMonthValueGDP(int year, int month) {
 		// TODO Auto-generated method stub
 		double gdp = 0;
 		handle.connect();
@@ -141,7 +139,7 @@ public class EconomyBIServiceImp implements EconomyBIService {
 		return gdp;
 	}
 
-	@Override
+
 	public double yearBPTrain(int year) {
 		// TODO Auto-generated method stub
 		double result = 0;
@@ -157,7 +155,7 @@ public class EconomyBIServiceImp implements EconomyBIService {
 		return result;
 	}
 
-	@Override
+
 	public double monthBPTrain(int year, int month) {
 		// TODO Auto-generated method stub
 		double result = 0;
@@ -168,6 +166,7 @@ public class EconomyBIServiceImp implements EconomyBIService {
 	/**
 	 * 训练所有数据
 	 */
+	@Override
 	public void train() {
 		try {
 			this.trainYear();
@@ -232,8 +231,8 @@ public class EconomyBIServiceImp implements EconomyBIService {
 			this.bp.outputBaseBpToFile(year, month);
 		}
 	}
-	
-	public double bpPredict(int year) throws Exception{
+	@Override
+	public double bpPredictGDP(int year) throws Exception{
 		handle.connect();
 		EconomyPoJo pojo = handle.selectYearEconomy(year-1);//前一年的
 		handle.close();
@@ -241,7 +240,8 @@ public class EconomyBIServiceImp implements EconomyBIService {
 		return this.bp.bp.preprocessing.reverseY(bp.test(pojo)[0]);
 		
 	}
-	public double bpPredict(int year, int month) throws Exception{
+	@Override
+	public double bpPredictGDP(int year, int month) throws Exception{
 		handle.connect();
 		EconomyPoJo pojo = handle.selectMonthEconomy(year-1, month);
 		handle.close();
@@ -255,7 +255,52 @@ public class EconomyBIServiceImp implements EconomyBIService {
 	 * @param predictValue
 	 * @return
 	 */
-	public double aberration(double realValue, double predictValue){
+	@Override
+	public double aberrationGDP(double realValue, double predictValue){
 		return (Math.abs(realValue-predictValue)/realValue)*100;
+	}
+
+	// 税务部分实现
+	
+	@Override
+	public double regressionPredictTax(int year) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double regressionPredictTax(int year, int month) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double bpPredictTax(int year) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double bpPredictTax(int year, int month) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double realYearValueTax(int year) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double realMonthValueTax(int year, int month) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double aberrationTax(double realValue, double predictValue) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
