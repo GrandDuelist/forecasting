@@ -9,8 +9,7 @@ import cn.com.forecasting.bp.EconomyBP;
 import cn.com.forecasting.mullinearregression.MultivariableLinearRegression;
 import cn.com.sql.pojo.EconomyPoJo;
 
-
-public class EconomyBIServiceImp implements GDPBIService,TaxBIService {
+public class EconomyBIServiceImp implements GDPBIService, TaxBIService {
 
 	private EconomyHandle handle = new EconomyHandle();
 	private MultivariableLinearRegression regression = new MultivariableLinearRegression();
@@ -20,13 +19,13 @@ public class EconomyBIServiceImp implements GDPBIService,TaxBIService {
 	/**
 	 * 按年回归 多元线性回归
 	 */
-	public double[] yearRegression(int year,EconomyType type) {
+	public double[] yearRegression(int year, EconomyType type) {
 		// TODO Auto-generated method stub
 		double coef[] = null;
 		handle.connect();
 		try {
 			List<EconomyPoJo> pojos = handle.selectPreviousYear(year);
-			coef = regression.regressionThroughDatabase(pojos,type);
+			coef = regression.regressionThroughDatabase(pojos, type);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,14 +55,14 @@ public class EconomyBIServiceImp implements GDPBIService,TaxBIService {
 	/**
 	 * 按月回归 多元线性回归
 	 */
-	public double[] monthRegression(int year, int month,EconomyType type) {
+	public double[] monthRegression(int year, int month, EconomyType type) {
 		// TODO Auto-generated method stub
 		double[] coef = null;
 		handle.connect();
 		try {
 			List<EconomyPoJo> pojos = handle.selectPreviousYearSameMonth(year,
 					month);
-			coef = regression.regressionThroughDatabase(pojos,type);
+			coef = regression.regressionThroughDatabase(pojos, type);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,7 +74,7 @@ public class EconomyBIServiceImp implements GDPBIService,TaxBIService {
 	/**
 	 * 按月预测 多元线性回归
 	 */
-	
+
 	public double monthRegressionPredict(int year, int month, double[] coef) {
 		// TODO Auto-generated method stub
 		double predictGDP = 0;
@@ -90,15 +89,16 @@ public class EconomyBIServiceImp implements GDPBIService,TaxBIService {
 		}
 		return predictGDP;
 	}
-	
+
 	@Override
-	public double regressionPredictGDP(int year, int month){
-		double[] coef = this.monthRegression(year, month,EconomyType.GDP);
-		return this.monthRegressionPredict(year, month,coef);
+	public double regressionPredictGDP(int year, int month) {
+		double[] coef = this.monthRegression(year, month, EconomyType.GDP);
+		return this.monthRegressionPredict(year, month, coef);
 	}
+
 	@Override
-	public double regressionPredictGDP(int year){
-		double[] coef = this.yearRegression(year,EconomyType.GDP);
+	public double regressionPredictGDP(int year) {
+		double[] coef = this.yearRegression(year, EconomyType.GDP);
 		return this.yearRegressionPredict(year, coef);
 	}
 
@@ -140,7 +140,6 @@ public class EconomyBIServiceImp implements GDPBIService,TaxBIService {
 		return gdp;
 	}
 
-
 	public double yearBPTrain(int year) {
 		// TODO Auto-generated method stub
 		double result = 0;
@@ -156,7 +155,6 @@ public class EconomyBIServiceImp implements GDPBIService,TaxBIService {
 		return result;
 	}
 
-
 	public double monthBPTrain(int year, int month) {
 		// TODO Auto-generated method stub
 		double result = 0;
@@ -170,8 +168,8 @@ public class EconomyBIServiceImp implements GDPBIService,TaxBIService {
 	@Override
 	public void trainGDP() {
 		try {
-			this.trainYear();
-			this.trainMonth();
+			this.trainYear(EconomyType.GDP);
+			this.trainMonth(EconomyType.TAX);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -182,23 +180,23 @@ public class EconomyBIServiceImp implements GDPBIService,TaxBIService {
 	 * 
 	 * @throws SQLException
 	 */
-	public void trainYear() throws Exception {
+	public void trainYear(EconomyType type) throws Exception {
 		handle.connect();
 		List<EconomyPoJo> pojos = handle.selectAllYear();
 		handle.close();
 		for (int i = 0; i < pojos.size(); i++) {
 			EconomyPoJo pojo = pojos.get(i);
-			this.trainSpecificYear(pojo.getYear() + 1);
+			this.trainSpecificYear(pojo.getYear() + 1, type);
 		}
 	}
 
-	public void trainMonth() throws Exception {
+	public void trainMonth(EconomyType type) throws Exception {
 		handle.connect();
 		List<EconomyPoJo> pojos = handle.selectAllMonth();
 		handle.close();
 		for (int i = 0; i < pojos.size(); i++) {
 			EconomyPoJo pojo = pojos.get(i);
-			this.trainSpecificMonth(pojo.getYear() + 1, pojo.getMonth());
+			this.trainSpecificMonth(pojo.getYear() + 1, pojo.getMonth(), type);
 		}
 	}
 
@@ -209,60 +207,64 @@ public class EconomyBIServiceImp implements GDPBIService,TaxBIService {
 	 * @throws SQLException
 	 * @throws IOException
 	 */
-	public void trainSpecificYear(int year) throws Exception {
+	public void trainSpecificYear(int year, EconomyType type) throws Exception {
 		handle.connect();
 		// 拿到改年的所有数据进行训练
 		List<EconomyPoJo> previousPoJos = handle.selectPreviousYear(year);
 		handle.close();
 		if (previousPoJos.size() > DataMapping.minPreviousDataNumber) {
-			this.bp.trainOnlyByNormalizedEconomy(previousPoJos,
+			this.bp.trainOnlyByNormalizedEconomy(previousPoJos, type,
 					DataMapping.bpTrainTime);
-			this.bp.outputBaseBpToFile(year); // 存到硬盘上
+			this.bp.outputBaseBpToFile(year, type); // 存到硬盘上
 		}
 	}
 
-	public void trainSpecificMonth(int year, int month) throws Exception {
+	public void trainSpecificMonth(int year, int month, EconomyType type)
+			throws Exception {
 		handle.connect();
 		List<EconomyPoJo> previousPoJos = handle.selectPreviousYearSameMonth(
 				year, month);
 		handle.close();
 		if (previousPoJos.size() > DataMapping.minPreviousDataNumber) {
-			this.bp.trainOnlyByNormalizedEconomy(previousPoJos,
+			this.bp.trainOnlyByNormalizedEconomy(previousPoJos, type,
 					DataMapping.bpTrainTime);
-			this.bp.outputBaseBpToFile(year, month);
+			this.bp.outputBaseBpToFile(year, month, type);
 		}
 	}
+
 	@Override
-	public double bpPredictGDP(int year) throws Exception{
+	public double bpPredictGDP(int year) throws Exception {
 		handle.connect();
-		EconomyPoJo pojo = handle.selectYearEconomy(year-1);//前一年的
+		EconomyPoJo pojo = handle.selectYearEconomy(year - 1);// 前一年的
 		handle.close();
-		this.bp.readBaseBpFromFile(year); //读取该年的权值数据
+		this.bp.readBaseBpFromFile(year, EconomyType.GDP); // 读取该年的权值数据
 		return this.bp.bp.preprocessing.reverseY(bp.test(pojo)[0]);
-		
+
 	}
+
 	@Override
-	public double bpPredictGDP(int year, int month) throws Exception{
+	public double bpPredictGDP(int year, int month) throws Exception {
 		handle.connect();
-		EconomyPoJo pojo = handle.selectMonthEconomy(year-1, month);
+		EconomyPoJo pojo = handle.selectMonthEconomy(year - 1, month);
 		handle.close();
-		this.bp.readBaseBpFromFile(year,month); //读取该年的权值数据
+		this.bp.readBaseBpFromFile(year, month, EconomyType.GDP); // 读取该年的权值数据
 		return this.bp.bp.preprocessing.reverseY(bp.test(pojo)[0]);
 	}
-	
+
 	/**
 	 * 计算误差
+	 * 
 	 * @param realValue
 	 * @param predictValue
 	 * @return
 	 */
 	@Override
-	public double aberration(double realValue, double predictValue){
-		return (Math.abs(realValue-predictValue)/realValue)*100;
+	public double aberration(double realValue, double predictValue) {
+		return (Math.abs(realValue - predictValue) / realValue) * 100;
 	}
 
 	// 税务部分实现
-	
+
 	@Override
 	public double regressionPredictTax(int year) {
 		// TODO Auto-generated method stub
@@ -273,23 +275,36 @@ public class EconomyBIServiceImp implements GDPBIService,TaxBIService {
 	@Override
 	public double regressionPredictTax(int year, int month) {
 		// TODO Auto-generated method stub
-		double[] coef = this.monthRegression(year,month,EconomyType.TAX);
+		double[] coef = this.monthRegression(year, month, EconomyType.TAX);
 		return this.monthRegressionPredict(year, month, coef);
 	}
+
 	@Override
-	public void trainTax(){
-		
+	public void trainTax() {
+		try {
+			this.trainYear(EconomyType.TAX);
+			this.trainMonth(EconomyType.TAX);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+
 	@Override
 	public double bpPredictTax(int year) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		handle.connect();
+		EconomyPoJo pojo = handle.selectYearEconomy(year - 1);// 前一年的
+		handle.close();
+		this.bp.readBaseBpFromFile(year, EconomyType.TAX); // 读取该年的权值数据
+		return this.bp.bp.preprocessing.reverseY(bp.test(pojo)[0]);
 	}
 
 	@Override
 	public double bpPredictTax(int year, int month) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		handle.connect();
+		EconomyPoJo pojo = handle.selectMonthEconomy(year - 1, month);
+		handle.close();
+		this.bp.readBaseBpFromFile(year, month, EconomyType.TAX); // 读取该年的权值数据
+		return this.bp.bp.preprocessing.reverseY(bp.test(pojo)[0]);
 	}
 
 	@Override
@@ -321,7 +336,7 @@ public class EconomyBIServiceImp implements GDPBIService,TaxBIService {
 		}
 		handle.close();
 		return tax;
-		
+
 	}
 
 }

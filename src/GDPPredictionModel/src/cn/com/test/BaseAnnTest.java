@@ -9,6 +9,7 @@ import java.util.Random;
 import cn.com.forecasting.bp.BaseAnn;
 import cn.com.forecasting.bp.EconomyBP;
 import cn.com.sql.handle.EconomyHandle;
+import cn.com.sql.handle.EconomyType;
 import cn.com.sql.pojo.EconomyPoJo;
 
 public class BaseAnnTest {	
@@ -45,9 +46,9 @@ public class BaseAnnTest {
 			handle.close();
 			EconomyBP bp = new EconomyBP(8,4,1);
 		//	bp.trainByEconomyList(pojos, 200);
-			bp.trainByNormalizedEconomy(pojos, 10000);
+			bp.trainByNormalizedEconomy(pojos,EconomyType.GDP,10000);
 			System.out.println();
-			bp.trainByNormalizedEconomy(pojos.subList(0,pojos.size()-3),pojos.subList(pojos.size()-4, pojos.size()),10000);
+			bp.trainByNormalizedEconomy(pojos.subList(0,pojos.size()-3),pojos.subList(pojos.size()-4, pojos.size()),EconomyType.GDP,10000);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import cn.com.sql.handle.EconomyHandle;
+import cn.com.sql.handle.EconomyType;
 import cn.com.sql.pojo.EconomyPoJo;
 /**
  * 主要是归一化和反归一化处理
@@ -55,7 +56,7 @@ public class SpecificMath implements Serializable {
 	 * calculate the max and min value of both x and y
 	 * @param pojos
 	 */
-	public void calculateMaxMinOfXY(List<EconomyPoJo> pojos){
+	public void calculateMaxMinOfXY(List<EconomyPoJo> pojos,EconomyType type){
 		EconomyHandle handle = new EconomyHandle();
 		double[] init = handle.changeGDPAttributeToArray(pojos.get(0));
 		if(this.xNumber!=init.length){
@@ -65,12 +66,12 @@ public class SpecificMath implements Serializable {
 		System.arraycopy(init,0, this.xMax,0,init.length);
 		System.arraycopy(init, 0,this.xMin, 0, init.length);
 	
-		this.yMax = pojos.get(1).getCityGDP();
-		this.yMin = pojos.get(1).getCityGDP();
+		this.yMax = pojos.get(1).getCurrentY(type);
+		this.yMin = pojos.get(1).getCurrentY(type);
 		
 		for(int i=0;i<pojos.size()-1;i++){
 			double[] current = handle.changeGDPAttributeToArray(pojos.get(i));
-			double currentY = pojos.get(i+1).getCityGDP();
+			double currentY = pojos.get(i+1).getCurrentY(type);
 			
 			for(int j=0; j<this.xNumber;j++){
 				if(current[j]>this.xMax[j]){

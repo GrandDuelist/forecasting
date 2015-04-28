@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.util.List;
 
 import cn.com.sql.handle.EconomyHandle;
+import cn.com.sql.handle.EconomyType;
 import cn.com.sql.pojo.EconomyPoJo;
 
 /**
@@ -66,14 +67,14 @@ public class EconomyBP {
 	 * @param pojos 
 	 * @param trainTimes 
 	 */
-	public void trainByNormalizedEconomy(List<EconomyPoJo> pojos, int trainTimes) {
+	public void trainByNormalizedEconomy(List<EconomyPoJo> pojos,EconomyType type, int trainTimes) {
 		if (this.bp == null) {
 			System.out.println("please init bp at first");
 			return;
 		}
 		
 		SpecificMath preprocessing = new SpecificMath(this.inputSize);
-		preprocessing.calculateMaxMinOfXY(pojos);
+		preprocessing.calculateMaxMinOfXY(pojos,type);
 
 		// 对数据进行训练
 		for (int i = 0; i < trainTimes; i++) {
@@ -82,7 +83,7 @@ public class EconomyBP {
 				EconomyPoJo nextPojo = pojos.get(j + 1);
 				double[] currentX = preprocessing.normalizeX(currentPojo);
 				double[] target = new double[1];
-				target[0] = preprocessing.normalizeY(nextPojo.getCityGDP());
+				target[0] = preprocessing.normalizeY(nextPojo.getCurrentY(type));
 				this.bp.train(currentX, target);
 			}
 		}
@@ -95,10 +96,10 @@ public class EconomyBP {
 			EconomyPoJo nextPojo = pojos.get(j + 1);
 			double[] currentX = preprocessing.normalizeX(currentPojo);
 			double[] target = new double[1];
-			target[0] = preprocessing.normalizeY(nextPojo.getCityGDP());
+			target[0] = preprocessing.normalizeY(nextPojo.getCurrentY(type));
 			double[] result = this.bp.test(currentX);
-			System.out.println("预测值 " + preprocessing.reverseY(result[0]) + "  实际值 " + nextPojo.getCityGDP() + "误差： 百分之"+ 
-			100*Math.abs((preprocessing.reverseY(result[0])-nextPojo.getCityGDP())/nextPojo.getCityGDP()));
+			System.out.println("预测值 " + preprocessing.reverseY(result[0]) + "  实际值 " + nextPojo.getCurrentY(type) + "误差： 百分之"+ 
+			100*Math.abs((preprocessing.reverseY(result[0])-nextPojo.getCurrentY(type))/nextPojo.getCurrentY(type)));
 		}
 
 	}
@@ -108,14 +109,14 @@ public class EconomyBP {
 	 * @param pojos
 	 * @param trainTimes
 	 */
-	public void trainOnlyByNormalizedEconomy(List<EconomyPoJo> pojos,int trainTimes){
+	public void trainOnlyByNormalizedEconomy(List<EconomyPoJo> pojos,EconomyType type,int trainTimes){
 		if (this.bp == null) {
 			System.out.println("please init bp at first");
 			return;
 		}
 		
 		this.bp.preprocessing = new SpecificMath(this.inputSize);
-		this.bp.preprocessing.calculateMaxMinOfXY(pojos);
+		this.bp.preprocessing.calculateMaxMinOfXY(pojos,type);
 
 		// 对数据进行训练
 		for (int i = 0; i < trainTimes; i++) {
@@ -124,7 +125,7 @@ public class EconomyBP {
 				EconomyPoJo nextPojo = pojos.get(j + 1);
 				double[] currentX = this.bp.preprocessing.normalizeX(currentPojo);
 				double[] target = new double[1];
-				target[0] = this.bp.preprocessing.normalizeY(nextPojo.getCityGDP());
+				target[0] = this.bp.preprocessing.normalizeY(nextPojo.getCurrentY(type));
 				this.bp.train(currentX, target);
 			}
 		}
@@ -136,9 +137,9 @@ public class EconomyBP {
 	 * @param year target year 
 	 * @throws IOException 
 	 */
-	public boolean outputBaseBpToFile(int year) throws IOException{
+	public boolean outputBaseBpToFile(int year,EconomyType type) throws IOException{
 		boolean isExisted = true;
-		File file = new File(DataMapping.BP_WEIGHT_DIRECTORY+year);
+		File file = new File(DataMapping.BP_WEIGHT_DIRECTORY+type+year);
 		//file existed
 		if(!file.exists()){
 			file.createNewFile();
@@ -150,9 +151,9 @@ public class EconomyBP {
 		os.close();
 		return isExisted;
 	}
-	public boolean outputBaseBpToFile(int year, int month) throws Exception{
+	public boolean outputBaseBpToFile(int year, int month,EconomyType type) throws Exception{
 		boolean isExisted = true;
-		File file = new File(DataMapping.BP_WEIGHT_DIRECTORY+year+"_"+month);
+		File file = new File(DataMapping.BP_WEIGHT_DIRECTORY+type+"/"+year+"_"+month);
 		if(!file.exists()){
 			file.createNewFile();
 			isExisted = false;
@@ -171,9 +172,9 @@ public class EconomyBP {
 	 * @throws ClassNotFoundException 
 	 * @return 文件是否存在，不存在返回false
 	 */
-	public boolean readBaseBpFromFile(int year) throws IOException, ClassNotFoundException{
+	public boolean readBaseBpFromFile(int year,EconomyType type) throws IOException, ClassNotFoundException{
 		boolean isExisted = true;
-		File file = new File(DataMapping.BP_WEIGHT_DIRECTORY+year);
+		File file = new File(DataMapping.BP_WEIGHT_DIRECTORY+type+"/"+year);
 		//file existed
 		if(!file.exists()){
 			isExisted = false; return isExisted;
@@ -183,9 +184,9 @@ public class EconomyBP {
 		return isExisted;
 	}
 	
-	public boolean readBaseBpFromFile(int year,int month) throws Exception {
+	public boolean readBaseBpFromFile(int year,int month,EconomyType type) throws Exception {
 		boolean isExisted = true;
-		File file = new File(DataMapping.BP_WEIGHT_DIRECTORY+year+"_"+month);
+		File file = new File(DataMapping.BP_WEIGHT_DIRECTORY+type+"/"+year+"_"+month);
 		if(!file.exists()){
 			isExisted=false; return isExisted;
 		}
@@ -199,14 +200,14 @@ public class EconomyBP {
 	 * @param pojos
 	 * @param trainTimes
 	 */
-	public void trainByNormalizedEconomy(List<EconomyPoJo> pojos,List<EconomyPoJo> test, int trainTimes) {
+	public void trainByNormalizedEconomy(List<EconomyPoJo> pojos,List<EconomyPoJo> test,EconomyType type, int trainTimes) {
 		if (this.bp == null) {
 			System.out.println("please init bp at first");
 			return;
 		}
 		
 		this.bp.preprocessing = new SpecificMath(this.inputSize);
-		this.bp.preprocessing.calculateMaxMinOfXY(pojos);
+		this.bp.preprocessing.calculateMaxMinOfXY(pojos,type);
 
 		// 对数据进行训练
 		for (int i = 0; i < trainTimes; i++) {
@@ -215,7 +216,7 @@ public class EconomyBP {
 				EconomyPoJo nextPojo = pojos.get(j + 1);
 				double[] currentX = this.bp.preprocessing.normalizeX(currentPojo);
 				double[] target = new double[1];
-				target[0] = this.bp.preprocessing.normalizeY(nextPojo.getCityGDP());
+				target[0] = this.bp.preprocessing.normalizeY(nextPojo.getCurrentY(type));
 				this.bp.train(currentX, target);
 			}
 		}
@@ -228,10 +229,10 @@ public class EconomyBP {
 			EconomyPoJo nextPojo = test.get(j + 1);
 			double[] currentX = this.bp.preprocessing.normalizeX(currentPojo);
 			double[] target = new double[1];
-			target[0] = this.bp.preprocessing.normalizeY(nextPojo.getCityGDP());
+			target[0] = this.bp.preprocessing.normalizeY(nextPojo.getCurrentY(type));
 			double[] result = this.bp.test(currentX);
-			System.out.println("预测值 " + this.bp.preprocessing.reverseY(result[0]) + "  实际值 " + nextPojo.getCityGDP()+  "误差： 百分之"+ 
-					100*Math.abs((this.bp.preprocessing.reverseY(result[0])-nextPojo.getCityGDP())/nextPojo.getCityGDP()));
+			System.out.println("预测值 " + this.bp.preprocessing.reverseY(result[0]) + "  实际值 " + nextPojo.getCurrentY(type)+  "误差： 百分之"+ 
+					100*Math.abs((this.bp.preprocessing.reverseY(result[0])-nextPojo.getCurrentY(type))/nextPojo.getCurrentY(type)));
 		}
 	}
 	
