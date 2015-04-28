@@ -9,7 +9,11 @@ import cn.com.preprocessing.AttributeFilter;
 import cn.com.preprocessing.excel.ColumnPoJo;
 import cn.com.preprocessing.excel.ExcelReader;
 import cn.com.preprocessing.math.MathCalculation;
+import cn.com.sql.handle.EconomyBIServiceImp;
 import cn.com.sql.handle.EconomyHandle;
+import cn.com.sql.handle.EconomyType;
+import cn.com.sql.handle.GDPBIService;
+import cn.com.sql.handle.TaxBIService;
 import cn.com.sql.pojo.EconomyPoJo;
 
 public class RegressionTest {
@@ -46,9 +50,19 @@ public class RegressionTest {
 			*/
 			
 			//分支2
-			 double[] coef = regression.regressionThroughDatabase(pojos);
+			/**
+			 double[] coef = regression.regressionThroughDatabase(pojos,EconomyType.TAX);
 			 double yearGDP=regression.predictThroughDataBase(pojos.get(pojos.size()-3), coef);
+			 */
+			
+			//分支3
+			GDPBIService service = new EconomyBIServiceImp();
+			double yearGDP = service.regressionPredictGDP(2012);
 			 System.out.println(yearGDP);
+			 
+			TaxBIService tax = new EconomyBIServiceImp();
+			double yearTax = tax.regressionPredictTax(2012);
+			System.out.println(yearTax);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

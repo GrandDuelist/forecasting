@@ -6,7 +6,7 @@ public interface TaxBIService {
 	/**
 	 * bp 训练
 	 */
-	public void train(); 
+	public void trainTax(); 
 	public double bpPredictTax(int year) throws Exception;
 	public double bpPredictTax(int year,int month) throws Exception;
 	/**
@@ -28,5 +28,5 @@ public interface TaxBIService {
 	 * @param predictValue
 	 * @return
 	 */
-	public double aberrationTax(double realValue, double predictValue);
+	public double aberration(double realValue, double predictValue);
 }

@@ -12,7 +12,7 @@ public interface GDPBIService {
 	/**
 	 * bp 训练
 	 */
-	public void train(); 
+	public void trainGDP(); 
 	public double bpPredictGDP(int year) throws Exception;
 	public double bpPredictGDP(int year,int month) throws Exception;
 	/**
@@ -34,7 +34,7 @@ public interface GDPBIService {
 	 * @param predictValue
 	 * @return
 	 */
-	public double aberrationGDP(double realValue, double predictValue);
+	public double aberration(double realValue, double predictValue);
 	
 	
 }

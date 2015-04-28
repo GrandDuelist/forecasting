@@ -4,8 +4,9 @@ import java.util.List;
 
 import cn.com.preprocessing.excel.ColumnPoJo;
 import cn.com.sql.handle.EconomyHandle;
+import cn.com.sql.handle.EconomyType;
 import cn.com.sql.pojo.EconomyPoJo;
-
+import cn.com.sql.handle.EconomyBIServiceImp;;
 public class MultivariableLinearRegression {
 	
 	/**
@@ -47,7 +48,7 @@ public class MultivariableLinearRegression {
 	 * @param pojos 训练集
 	 * @return
 	 */
-	public double[] regressionThroughDatabase(List<EconomyPoJo> pojos){
+	public double[] regressionThroughDatabase(List<EconomyPoJo> pojos,EconomyType type){
 		double[] coef=null;
 		if(pojos==null) return coef;
 		
@@ -58,7 +59,7 @@ public class MultivariableLinearRegression {
 		double[] Y = new double[numberData];      //此时的y为当年数据
 
 		for(int i=1;i<pojos.size();i++){
-			Y[i-1] = pojos.get(i).getCityGDP();
+			Y[i-1] = pojos.get(i).getCurrentY(type);
 		}
 		
 		for(int i=0;i<numberData;i++){

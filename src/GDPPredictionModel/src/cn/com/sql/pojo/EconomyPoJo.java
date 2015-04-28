@@ -1,5 +1,7 @@
 package cn.com.sql.pojo;
 
+import cn.com.sql.handle.EconomyType;
+
 public class EconomyPoJo {
 	private int year;   //年份
 	private double cityGDP;   //市GDP
@@ -97,7 +99,15 @@ public class EconomyPoJo {
 	public void setTax(double tax){
 		this.tax=tax;
 	}
-	
+	public double getCurrentY(EconomyType type){
+		if(EconomyType.GDP==type){
+			return this.cityGDP;
+		}
+		if(EconomyType.TAX==type){
+			return this.tax;
+		}
+		return 0;
+	}
 	
 		
 }
