@@ -65,8 +65,8 @@ public class EconomyHandle {
 	 */
 	public List<EconomyPoJo> selectAllYear() throws SQLException {
 		List<EconomyPoJo> pojos = new ArrayList<EconomyPoJo>();
-		if (!conn.isClosed())
-			System.out.println("Succeeded connecting to the Database!");
+		/*if (!conn.isClosed())
+			System.out.println("Succeeded connecting to the Database!");*/
 		// statement用来执行SQL语句
 		Statement statement = conn.createStatement();
 		// 要执行的SQL语句
@@ -102,8 +102,8 @@ public class EconomyHandle {
 	 */
 	public List<EconomyPoJo> selectAllMonth() throws SQLException {
 		List<EconomyPoJo> pojos = new ArrayList<EconomyPoJo>();
-		if (!conn.isClosed())
-			System.out.println("Succeeded connecting to the Database!");
+		/*if (!conn.isClosed())
+			System.out.println("Succeeded connecting to the Database!");*/
 		// statement用来执行SQL语句
 		Statement statement = conn.createStatement();
 		// 要执行的SQL语句
@@ -140,8 +140,8 @@ public class EconomyHandle {
 	 */
 	public EconomyPoJo selectMonthEconomy(int year,int month) throws SQLException{
 		EconomyPoJo current = null;
-		if (!conn.isClosed())
-			System.out.println("Succeeded connecting to the Database!");
+	/*	if (!conn.isClosed())
+			System.out.println("Succeeded connecting to the Database!");*/
 		// 要执行的SQL语句
 		String sql = "select * from economy_month where economy_month.year=? and economy_month.month=?";
 		// 结果集
@@ -176,8 +176,8 @@ public class EconomyHandle {
 	 */
 	public EconomyPoJo selectYearEconomy(int year) throws SQLException{
 		EconomyPoJo current = null;
-		if (!conn.isClosed())
-			System.out.println("Succeeded connecting to the Database!");
+		/*if (!conn.isClosed())
+			System.out.println("Succeeded connecting to the Database!");*/
 		// 要执行的SQL语句
 		String sql = "select * from economy where economy.year=?";
 		// 结果集
@@ -212,8 +212,8 @@ public class EconomyHandle {
 	 */
 	public List<EconomyPoJo> selectPreviousYear(int year) throws SQLException {
 		List<EconomyPoJo> pojos = new ArrayList<EconomyPoJo>();
-		if (!conn.isClosed())
-			System.out.println("Succeeded connecting to the Database!");
+		/*if (!conn.isClosed())
+			System.out.println("Succeeded connecting to the Database!");*/
 		// 要执行的SQL语句
 		String sql = "select * from economy where economy.year<?";
 		// 结果集
@@ -251,8 +251,8 @@ public class EconomyHandle {
 	public List<EconomyPoJo> selectPreviousYearSameMonth(int year, int month)
 			throws SQLException {
 		List<EconomyPoJo> pojos = new ArrayList<EconomyPoJo>();
-		if (!conn.isClosed())
-			System.out.println("Succeeded connecting to the Database!");
+		/*if (!conn.isClosed())
+			System.out.println("Succeeded connecting to the Database!");*/
 		
 		// 要执行的SQL语句
 		String sql = "select * from economy_month where economy_month.year<? and economy_month.month=?";
@@ -311,6 +311,23 @@ public class EconomyHandle {
 		}
 
 	}
+	
+	public void updateMonthTax(int id, double tax){
+		try {
+			if (!conn.isClosed()) {
+				// 要执行的SQL语句
+				String sql = "Update `forecasting`.`economy_month` SET `tax`=? WHERE `id`=?";
+				PreparedStatement pst = conn.prepareStatement(sql);
+				pst.setDouble(1,tax);
+				pst.setInt(2,id);
+				pst.executeUpdate();
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * 插入月份经济数据到 month表
@@ -365,5 +382,60 @@ public class EconomyHandle {
 		result[7] = pojo.getPopulation();
 		return result;
 	}
-
-}
+	/**
+	 * @param tableName target table
+	 * @param dataName data name
+	 * @param startYear included
+	 * @param endYear not included
+	 * @return array of target data
+	 * @throws SQLException 
+	 */
+	public double[] selectSpecificYearData(String tableName,String dataName,int startYear, int endYear) throws SQLException{
+		
+		
+		// 要执行的SQL语句
+		String sql = "select ? from ? where ?.year<? and ?.year>=?";
+		// 结果集
+		PreparedStatement pst = conn.prepareStatement(sql);
+		pst.setString(1, dataName);
+		pst.setString(2, tableName);
+		pst.setString(3, tableName);
+		pst.setInt(4, endYear);
+		pst.setString(5, tableName);
+		pst.setInt(6,startYear);
+		ResultSet rs = pst.executeQuery();
+		List<Double> resultList = new ArrayList<Double>(); 
+		
+		while (rs.next()) {
+				resultList.add(rs.getDouble(dataName));
+			}
+		
+		int length = resultList.size();
+		double[] results = new double[length];
+		for(int i=0;i<resultList.size();i++){
+			results[i] = resultList.get(i);
+		}
+			return results;
+		}
+		
+	public double[] selectSpecificYearGDP(int startYear, int endYear){
+		try {
+			return this.selectSpecificYearData("economy", "city_gdp", startYear, endYear);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	public double[] selectSpecificYearTax(int startYear,int endYear){
+		try {
+			return this.selectSpecificYearData("economy", "tax", startYear, endYear);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	}

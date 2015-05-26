@@ -15,13 +15,20 @@ public class ProcessData {
 		
 		try {
 			List<EconomyPoJo> economies = handle.selectAllYear();
-			
+			int number = 1;
 			//将实际数据打乱按月重组
 			for(int i=1;i<economies.size();i++){
+				
 				EconomyPoJo pre = economies.get(i-1);
 				EconomyPoJo current = economies.get(i);
-				EconomyPoJo[] pojos= changeYearToMonthEconomy(pre,current);
-				insertMonthDataToDatabase(pojos,handle);
+			//	EconomyPoJo[] pojos= changeYearToMonthEconomy(pre,current);
+			//	insertMonthDataToDatabase(pojos,handle);
+				double[] monthTax = randomGenerateMonthData(current.getTax(),current.getTax()/12*0.005);
+				for(int j=0;j<monthTax.length;j++){
+					handle.updateMonthTax(number, monthTax[j]);
+					number++;
+				}
+			
 			}
 			
 		} catch (SQLException e) {
@@ -43,6 +50,9 @@ public class ProcessData {
 		}
 		
 	}
+	
+	
+	
 	/**
 	 * 将年份数据模拟为月份数据
 	 * @param preYearPoJo
@@ -142,7 +152,7 @@ public class ProcessData {
 		for(int i=0;i<dataNumber;i++){
 			double current = slope*i + initial;
 			result[i] = current+(random.nextBoolean()?1:(-1))*aberration*random.nextDouble();
-			System.out.println(result[i]);
+			
 		}
 		return result;
 	}

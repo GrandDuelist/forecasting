@@ -75,7 +75,8 @@ public class MultivariableLinearRegression {
 		coef = this.calRegressionCoef(X, Y, numberX, numberData);
 	/*	for(int i =0; i<numberX;i++){
 			
-			System.out.println(" 回归系数： "+coef[i]);
+			String name = xColumnPoJo.get(i-1).getHeader();
+			System.out.println(name+" 回归系数： "+coef[i]);
 			}*/
 		
 		return coef;
@@ -91,7 +92,9 @@ public class MultivariableLinearRegression {
 		double[] X= new EconomyHandle().changeGDPAttributeToArray(pojo);
 		for(int i=1;i<X.length+1;i++){
 			yearGDP = yearGDP + X[i-1]*coef[i];
+		//	System.out.println("X = "+X[i-1]+" coef = "+coef[i]);
 		}
+	//	System.out.println(coef[0]);
 		yearGDP = yearGDP+coef[0];
 		return yearGDP;
 	}

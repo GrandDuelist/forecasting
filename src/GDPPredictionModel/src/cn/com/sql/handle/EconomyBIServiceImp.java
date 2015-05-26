@@ -169,7 +169,7 @@ public class EconomyBIServiceImp implements GDPBIService, TaxBIService {
 	public void trainGDP() {
 		try {
 			this.trainYear(EconomyType.GDP);
-			this.trainMonth(EconomyType.TAX);
+			this.trainMonth(EconomyType.GDP);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

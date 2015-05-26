@@ -89,6 +89,8 @@ public class SpecificMath implements Serializable {
 				this.yMin = currentY;
 			}
 		}
+		
+		
 	}
 	
 	/**

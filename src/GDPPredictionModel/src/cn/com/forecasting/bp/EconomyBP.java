@@ -139,7 +139,7 @@ public class EconomyBP {
 	 */
 	public boolean outputBaseBpToFile(int year,EconomyType type) throws IOException{
 		boolean isExisted = true;
-		File file = new File(DataMapping.BP_WEIGHT_DIRECTORY+type+year);
+		File file = new File(DataMapping.BP_WEIGHT_DIRECTORY+type+"/"+year);
 		//file existed
 		if(!file.exists()){
 			file.createNewFile();

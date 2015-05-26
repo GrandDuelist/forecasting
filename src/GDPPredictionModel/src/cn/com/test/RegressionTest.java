@@ -57,13 +57,20 @@ public class RegressionTest {
 			
 			//分支3
 			GDPBIService service = new EconomyBIServiceImp();
-			double yearGDP = service.regressionPredictGDP(2012);
-			 System.out.println(yearGDP);
+			for(int j=2001;j<2013;j++){
+			for(int i=1;i<13;i++){
+				double monthGDP = service.regressionPredictGDP(j,i);
+				double real = service.realMonthValueGDP(j,i);
+				double error =  service.aberration(monthGDP, real);
+				System.out.println(j+"年"+i+"月"+" "+monthGDP+" "+real+" "+error);
 			 
+			}
+			}
+			/* 
 			TaxBIService tax = new EconomyBIServiceImp();
 			double yearTax = tax.regressionPredictTax(2012);
 			System.out.println(yearTax);
-
+*/
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
