@@ -390,19 +390,16 @@ public class EconomyHandle {
 	 * @return array of target data
 	 * @throws SQLException 
 	 */
-	public double[] selectSpecificYearData(String tableName,String dataName,int startYear, int endYear) throws SQLException{
+	public double[] selectSpecificYearData(String dataName,int startYear, int endYear) throws SQLException{
 		
 		
 		// 要执行的SQL语句
-		String sql = "select ? from ? where ?.year<? and ?.year>=?";
+		String sql = "select * from economy where economy.year<? and economy.year>=?";
 		// 结果集
 		PreparedStatement pst = conn.prepareStatement(sql);
-		pst.setString(1, dataName);
-		pst.setString(2, tableName);
-		pst.setString(3, tableName);
-		pst.setInt(4, endYear);
-		pst.setString(5, tableName);
-		pst.setInt(6,startYear);
+	
+		pst.setInt(1, endYear);
+		pst.setInt(2,startYear);
 		ResultSet rs = pst.executeQuery();
 		List<Double> resultList = new ArrayList<Double>(); 
 		
@@ -420,7 +417,7 @@ public class EconomyHandle {
 		
 	public double[] selectSpecificYearGDP(int startYear, int endYear){
 		try {
-			return this.selectSpecificYearData("economy", "city_gdp", startYear, endYear);
+			return this.selectSpecificYearData("city_gdp", startYear, endYear);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -430,7 +427,7 @@ public class EconomyHandle {
 	}
 	public double[] selectSpecificYearTax(int startYear,int endYear){
 		try {
-			return this.selectSpecificYearData("economy", "tax", startYear, endYear);
+			return this.selectSpecificYearData("tax", startYear, endYear);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
