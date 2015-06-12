@@ -10,6 +10,20 @@ public class YmlIO {
 	private String filePath;
 	private String ymlContent;
 	
+	
+	
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	public String getYmlContent() {
+		return ymlContent;
+	}
+	public void setYmlContent(String ymlContent) {
+		this.ymlContent = ymlContent;
+	}
 	public YmlIO(){
 	}
 	public YmlIO(String filePath){
