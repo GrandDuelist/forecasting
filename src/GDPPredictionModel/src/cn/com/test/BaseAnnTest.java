@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import cn.com.forecasting.bp.BaseAnn;
-import cn.com.forecasting.bp.EconomyBP;
-import cn.com.sql.handle.EconomyHandle;
+import cn.com.forecasting.DAO.EconomyDAO;
+import cn.com.forecasting.model.BaseAnn;
+import cn.com.forecasting.model.EconomyBP;
+import cn.com.forecasting.pojo.EconomyPoJo;
 import cn.com.sql.handle.EconomyType;
-import cn.com.sql.pojo.EconomyPoJo;
 
 public class BaseAnnTest {	
 	public static void main(String[] args){
@@ -35,7 +35,7 @@ public class BaseAnnTest {
 //		int a =1 ;
 //		a >>>= 1;
 	//	System.out.println((-Integer.MIN_VALUE));
-		EconomyHandle handle = new EconomyHandle();
+		EconomyDAO handle = new EconomyDAO();
 		
 		//神经网络训练测试
 	 

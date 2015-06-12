@@ -1,12 +1,12 @@
 package cn.com.test;
 
-import cn.com.sql.handle.EconomyHandle;
+import cn.com.forecasting.DAO.EconomyDAO;
 
 public class sqlMonthTest {
 
 	public static void main(String[] args){
 		
-		EconomyHandle handle = new EconomyHandle();
+		EconomyDAO handle = new EconomyDAO();
 		handle.connect();
 		handle.updateMonthTax(1, 5000);
 		

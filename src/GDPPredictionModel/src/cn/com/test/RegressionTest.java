@@ -4,17 +4,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.com.forecasting.mullinearregression.MultivariableLinearRegression;
-import cn.com.preprocessing.AttributeFilter;
-import cn.com.preprocessing.excel.ColumnPoJo;
-import cn.com.preprocessing.excel.ExcelReader;
+import cn.com.forecasting.DAO.EconomyDAO;
+import cn.com.forecasting.model.MultivariableLinearRegression;
+import cn.com.forecasting.pojo.ColumnPoJo;
+import cn.com.forecasting.pojo.EconomyPoJo;
+import cn.com.forecasting.service.GDPBIService;
+import cn.com.forecasting.service.TaxBIService;
+import cn.com.preprocessing.io.ExcelReader;
+import cn.com.preprocessing.math.AttributeFilter;
 import cn.com.preprocessing.math.MathCalculation;
 import cn.com.sql.handle.EconomyBIServiceImp;
-import cn.com.sql.handle.EconomyHandle;
 import cn.com.sql.handle.EconomyType;
-import cn.com.sql.handle.GDPBIService;
-import cn.com.sql.handle.TaxBIService;
-import cn.com.sql.pojo.EconomyPoJo;
 
 public class RegressionTest {
 	
@@ -30,7 +30,7 @@ public class RegressionTest {
 		//	reader.readExcelFile();
 			/*List<ColumnPoJo> xColumnPoJo = filter.getAllDataWithCoefficient("上海", 6);
 			ColumnPoJo yColumnPoJo = reader.getTargetCol("上海", 6);*/
-			EconomyHandle handle = new EconomyHandle();
+			EconomyDAO handle = new EconomyDAO();
 			handle.connect();
 			List<EconomyPoJo> pojos = handle.selectAllYear();
 			handle.close();

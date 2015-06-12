@@ -1,6 +1,6 @@
 package cn.com.test;
 
-import cn.com.forecasting.mullinearregression.MultivariableLinearRegression;
+import cn.com.forecasting.model.MultivariableLinearRegression;
 
 public class MultiVariLinRegressionTest {
 

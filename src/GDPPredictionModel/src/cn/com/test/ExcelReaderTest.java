@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 
-import cn.com.preprocessing.excel.ExcelReader;
+import cn.com.preprocessing.io.ExcelReader;
 
 public class ExcelReaderTest {
 	

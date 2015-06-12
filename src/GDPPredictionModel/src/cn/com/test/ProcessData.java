@@ -4,13 +4,13 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 
-import cn.com.sql.handle.EconomyHandle;
-import cn.com.sql.pojo.EconomyPoJo;
+import cn.com.forecasting.DAO.EconomyDAO;
+import cn.com.forecasting.pojo.EconomyPoJo;
 
 public class ProcessData {
 	
 	public static void main(String[] args){
-		EconomyHandle handle = new EconomyHandle();
+		EconomyDAO handle = new EconomyDAO();
 		handle.connect();
 		
 		try {
@@ -43,7 +43,7 @@ public class ProcessData {
 	 * @param pojos
 	 * @param handle
 	 */
-	public static void insertMonthDataToDatabase(EconomyPoJo[] pojos,EconomyHandle handle){
+	public static void insertMonthDataToDatabase(EconomyPoJo[] pojos,EconomyDAO handle){
 		for(int i=0;i<pojos.length;i++){
 			EconomyPoJo pojo = pojos[i];
 			handle.insertToEconomyMonth(pojo);

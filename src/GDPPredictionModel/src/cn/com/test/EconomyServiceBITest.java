@@ -1,7 +1,7 @@
 package cn.com.test;
 
+import cn.com.forecasting.service.GDPBIService;
 import cn.com.sql.handle.EconomyBIServiceImp;
-import cn.com.sql.handle.GDPBIService;
 
 public class EconomyServiceBITest {
 	public static void main(String[] args) {

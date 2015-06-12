@@ -4,14 +4,17 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import cn.com.forecasting.bp.DataMapping;
-import cn.com.forecasting.bp.EconomyBP;
-import cn.com.forecasting.mullinearregression.MultivariableLinearRegression;
-import cn.com.sql.pojo.EconomyPoJo;
+import cn.com.forecasting.DAO.EconomyDAO;
+import cn.com.forecasting.model.DataMapping;
+import cn.com.forecasting.model.EconomyBP;
+import cn.com.forecasting.model.MultivariableLinearRegression;
+import cn.com.forecasting.pojo.EconomyPoJo;
+import cn.com.forecasting.service.GDPBIService;
+import cn.com.forecasting.service.TaxBIService;
 
 public class EconomyBIServiceImp implements GDPBIService, TaxBIService {
 
-	private EconomyHandle handle = new EconomyHandle();
+	private EconomyDAO handle = new EconomyDAO();
 	private MultivariableLinearRegression regression = new MultivariableLinearRegression();
 	private EconomyBP bp = new EconomyBP(DataMapping.numberX,
 			(int) DataMapping.numberX / 2, DataMapping.numberY);
@@ -338,5 +341,27 @@ public class EconomyBIServiceImp implements GDPBIService, TaxBIService {
 		return tax;
 
 	}
-
+	
+	@Override
+	public double mixedModelGDP(int year){
+		double result = 0;
+		
+		return result;
+	}
+	@Override
+	public double mixedModelGDP(int year,int month){
+		double result = 0;
+		return result;
+	}
+	@Override
+	public double mixedModelTax(int year){
+		double result = 0;
+		return result;
+	}
+	@Override
+	public double mixedModelTax(int year, int month){
+		double result = 0;
+		
+		return result;
+	}
 }

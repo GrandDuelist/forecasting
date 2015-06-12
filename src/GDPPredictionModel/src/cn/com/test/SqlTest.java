@@ -1,12 +1,12 @@
 package cn.com.test;
 
-import cn.com.sql.handle.EconomyHandle;
-import cn.com.sql.pojo.EconomyPoJo;
+import cn.com.forecasting.DAO.EconomyDAO;
+import cn.com.forecasting.pojo.EconomyPoJo;
 
 public class SqlTest {
 	
 	public static void main(String[] args){
-		EconomyHandle handle = new EconomyHandle();
+		EconomyDAO handle = new EconomyDAO();
 		try {
 			handle.connect();
 			/*List<EconomyPoJo> ecs = handle.selectPreviousYear(1988);*/

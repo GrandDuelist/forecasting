@@ -2,9 +2,9 @@ package cn.com.test;
 
 import java.io.IOException;
 
-import cn.com.preprocessing.AttributeFilter;
-import cn.com.preprocessing.excel.ColumnPoJo;
-import cn.com.preprocessing.excel.ExcelReader;
+import cn.com.forecasting.pojo.ColumnPoJo;
+import cn.com.preprocessing.io.ExcelReader;
+import cn.com.preprocessing.math.AttributeFilter;
 import cn.com.preprocessing.math.MathCalculation;
 
 public class AttributeFilterTest {
