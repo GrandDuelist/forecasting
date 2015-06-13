@@ -1,0 +1,17 @@
+#my_title{
+	
+	text-align: center;}
+#my_table tr td{
+	
+font-size: 0.5em;
+width: 20px;
+}	
+
+#my_table thead tr th{
+	font-size: 0.5em;
+	
+}
+#my_table{
+	width: 600;
+}
+
