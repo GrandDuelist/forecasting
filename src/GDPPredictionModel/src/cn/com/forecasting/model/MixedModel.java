@@ -9,4 +9,9 @@ import cn.com.preprocessing.math.ImprovedKNN;
  */
 public class MixedModel {
 	public ImprovedKNN improvateKNN = new ImprovedKNN();
+	
+	private double[] bpResult;
+	private double[] regResult;
+	private double[] bpError;
+	private double[] regError;
 }
