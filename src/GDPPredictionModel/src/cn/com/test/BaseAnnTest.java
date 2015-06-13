@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import cn.com.forecasing.type.EconomyType;
 import cn.com.forecasting.DAO.EconomyDAO;
 import cn.com.forecasting.model.BaseAnn;
 import cn.com.forecasting.model.EconomyBP;
 import cn.com.forecasting.pojo.EconomyPoJo;
-import cn.com.sql.handle.EconomyType;
 
 public class BaseAnnTest {	
 	public static void main(String[] args){

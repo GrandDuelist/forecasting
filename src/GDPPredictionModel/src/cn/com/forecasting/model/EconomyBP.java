@@ -8,10 +8,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
+import cn.com.forecasing.type.DataMapping;
+import cn.com.forecasing.type.EconomyType;
 import cn.com.forecasting.DAO.EconomyDAO;
 import cn.com.forecasting.pojo.EconomyPoJo;
 import cn.com.preprocessing.math.SpecificMath;
-import cn.com.sql.handle.EconomyType;
 
 /**
  * 对BP进行封装

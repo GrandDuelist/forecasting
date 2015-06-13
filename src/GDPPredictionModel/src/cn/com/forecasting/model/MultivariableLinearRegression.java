@@ -2,10 +2,10 @@ package cn.com.forecasting.model;
 
 import java.util.List;
 
+import cn.com.forecasing.type.EconomyType;
 import cn.com.forecasting.DAO.EconomyDAO;
 import cn.com.forecasting.pojo.ColumnPoJo;
 import cn.com.forecasting.pojo.EconomyPoJo;
-import cn.com.sql.handle.EconomyType;
 import cn.com.sql.handle.EconomyBIServiceImp;;
 public class MultivariableLinearRegression {
 	

@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import cn.com.forecasing.type.DataMapping;
+import cn.com.forecasing.type.EconomyType;
 import cn.com.forecasting.DAO.EconomyDAO;
-import cn.com.forecasting.model.DataMapping;
 import cn.com.forecasting.model.EconomyBP;
 import cn.com.forecasting.model.MultivariableLinearRegression;
 import cn.com.forecasting.pojo.EconomyPoJo;

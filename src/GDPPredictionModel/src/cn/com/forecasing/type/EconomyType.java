@@ -1,4 +1,4 @@
-package cn.com.sql.handle;
+package cn.com.forecasing.type;
 
 public enum EconomyType {
 	GDP,

@@ -1,4 +1,4 @@
-package cn.com.forecasting.model;
+package cn.com.forecasing.type;
 
 public class DataMapping {
 	public static String BP_WEIGHT_DIRECTORY = "../../data/bpweight/"; //神经网络权值存放位置

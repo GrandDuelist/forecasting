@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.com.forecasing.type.EconomyType;
 import cn.com.forecasting.DAO.EconomyDAO;
 import cn.com.forecasting.model.MultivariableLinearRegression;
 import cn.com.forecasting.pojo.ColumnPoJo;
@@ -14,7 +15,6 @@ import cn.com.preprocessing.io.ExcelReader;
 import cn.com.preprocessing.math.AttributeFilter;
 import cn.com.preprocessing.math.MathCalculation;
 import cn.com.sql.handle.EconomyBIServiceImp;
-import cn.com.sql.handle.EconomyType;
 
 public class RegressionTest {
 	

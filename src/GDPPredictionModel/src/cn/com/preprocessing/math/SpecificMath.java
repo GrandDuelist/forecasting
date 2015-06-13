@@ -3,9 +3,9 @@ package cn.com.preprocessing.math;
 import java.io.Serializable;
 import java.util.List;
 
+import cn.com.forecasing.type.EconomyType;
 import cn.com.forecasting.DAO.EconomyDAO;
 import cn.com.forecasting.pojo.EconomyPoJo;
-import cn.com.sql.handle.EconomyType;
 /**
  * 主要是归一化和反归一化处理
  * @author zhihan

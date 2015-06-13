@@ -1,6 +1,6 @@
 package cn.com.forecasting.pojo;
 
-import cn.com.sql.handle.EconomyType;
+import cn.com.forecasing.type.EconomyType;
 
 public class EconomyPoJo {
 	private int year;   //年份
