@@ -34,7 +34,7 @@ public interface TaxBIService {
 	 * 混合模型
 	 * @param year
 	 * @return
+	 * @throws Exception 
 	 */
-	public double mixedModelTax(int year);
-	public double mixedModelTax(int year, int month);
+	public double mixedPredictTax(int year, int month) throws Exception;
 }

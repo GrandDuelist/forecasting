@@ -1,4 +1,4 @@
-package cn.com.sql.handle;
+package cn.com.sql.serviceimp;
 
 import cn.com.forecasting.DAO.EconomyDAO;
 import cn.com.forecasting.service.CorrelationAnalysisService;

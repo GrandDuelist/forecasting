@@ -1,4 +1,4 @@
-package cn.com.sql.handle;
+package cn.com.sql.serviceimp;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -8,6 +8,7 @@ import cn.com.forecasing.type.DataMapping;
 import cn.com.forecasing.type.EconomyType;
 import cn.com.forecasting.DAO.EconomyDAO;
 import cn.com.forecasting.model.EconomyBP;
+import cn.com.forecasting.model.MixedModel;
 import cn.com.forecasting.model.MultivariableLinearRegression;
 import cn.com.forecasting.pojo.EconomyPoJo;
 import cn.com.forecasting.service.GDPBIService;
@@ -15,10 +16,13 @@ import cn.com.forecasting.service.TaxBIService;
 
 public class EconomyBIServiceImp implements GDPBIService, TaxBIService {
 
+	private MixedModel mixedModel = new MixedModel();
 	private EconomyDAO handle = new EconomyDAO();
 	private MultivariableLinearRegression regression = new MultivariableLinearRegression();
 	private EconomyBP bp = new EconomyBP(DataMapping.numberX,
 			(int) DataMapping.numberX / 2, DataMapping.numberY);
+	
+
 
 	/**
 	 * 按年回归 多元线性回归
@@ -344,25 +348,104 @@ public class EconomyBIServiceImp implements GDPBIService, TaxBIService {
 	}
 	
 	@Override
-	public double mixedModelGDP(int year){
+	public double mixedPredictGDP(int year,int month) throws Exception{
 		double result = 0;
+		mixedModel.bpResultLastYear = new double[12];
+		mixedModel.bpErrorLastYear = new double[12];
+		mixedModel.bpResult = new double[month];
+		mixedModel.bpError = new double[month];
+
+		mixedModel.regResultLastYear = new double[12];
+		mixedModel.regErrorLastYear = new double[12];
+		mixedModel.regResult = new double[month];
+		mixedModel.regError = new double[month];
+		this.bpYearMonthsGDP(year-1,mixedModel.bpResultLastYear,mixedModel.bpErrorLastYear,12);
+		this.bpYearMonthsGDP(year,mixedModel.bpResult,mixedModel.bpError,month);
 		
+		this.regYearMonthsGDP(year-1,mixedModel.regResultLastYear,mixedModel.regErrorLastYear,12);
+		this.regYearMonthsGDP(year,mixedModel.regResult,mixedModel.regError,month);
+		result = mixedModel.getPredictionResult(month);
 		return result;
 	}
 	@Override
-	public double mixedModelGDP(int year,int month){
+	public double mixedPredictTax(int year, int month) throws Exception{
 		double result = 0;
+		mixedModel.bpResultLastYear = new double[12];
+		mixedModel.bpErrorLastYear = new double[12];
+		mixedModel.bpResult = new double[month];
+		mixedModel.bpError = new double[month];
+
+		mixedModel.regResultLastYear = new double[12];
+		mixedModel.regErrorLastYear = new double[12];
+		mixedModel.regResult = new double[month];
+		mixedModel.regError = new double[month];
+		this.bpYearMonthsTax(year-1,mixedModel.bpResultLastYear,mixedModel.bpErrorLastYear,12);
+		this.regYearMonthsTax(year-1,mixedModel.regResultLastYear,mixedModel.regErrorLastYear,12);
+		this.bpYearMonthsTax(year,mixedModel.bpResult,mixedModel.bpError,month);
+		this.regYearMonthsTax(year,mixedModel.regResult,mixedModel.regError,month);
+		result = mixedModel.getPredictionResult(month);
 		return result;
 	}
-	@Override
-	public double mixedModelTax(int year){
-		double result = 0;
-		return result;
-	}
-	@Override
-	public double mixedModelTax(int year, int month){
-		double result = 0;
+	
+	
+	
+	public void bpYearMonthsGDP(int year, double[]bpResult,double[] bpError,int monthsNumber) throws Exception{
 		
-		return result;
+		for(int i=1;i<monthsNumber+1;i++){
+			bpResult[i-1] = this.bpPredictGDP(year, i);
+			bpError[i-1] = this.aberration(this.realMonthValueGDP(year, i),bpResult[i-1]);
+		}
 	}
+	
+	public void regYearMonthsGDP(int year,double[]regResult, double[] regError,int monthsNumber){
+		for(int i=1;i<monthsNumber+1;i++){
+			regResult[i-1] = this.regressionPredictGDP(year, i);
+			regError[i-1] = this.aberration(this.realMonthValueGDP(year, i),regResult[i-1]);
+		}
+	}
+	
+	public void mixedYearMonthGDP(int year,double[]mixedResult, double[] mixedError,int monthsNumber){
+		for(int i=1;i<monthsNumber+1;i++){
+			try {
+				mixedResult[i-1] = this.mixedPredictGDP(year, i);
+				mixedError[i-1] = this.aberration(this.realMonthValueGDP(year, i),mixedResult[i-1]);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	}
+	
+	public void mixedYearMonthTax(int year,double[]mixedResult, double[] mixedError,int monthsNumber){
+	
+		for(int i=1;i<monthsNumber+1;i++){
+			try {
+				mixedResult[i-1] = this.mixedPredictTax(year, i);
+				mixedError[i-1] = this.aberration(this.realMonthValueTax(year, i),mixedResult[i-1]);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	}
+	
+	public void bpYearMonthsTax(int year, double[]bpResult,double[] bpError,int monthsNumber) throws Exception{
+		
+		
+		for(int i=1;i<monthsNumber+1;i++){
+			bpResult[i-1] = this.bpPredictTax(year, i);
+			bpError[i-1] = this.aberration(this.realMonthValueTax(year, i),bpResult[i-1]);
+		}
+	}
+	
+	public void regYearMonthsTax(int year,double[]regResult, double[] regError,int monthsNumber){
+		
+		for(int i=1;i<monthsNumber+1;i++){
+			regResult[i-1] = this.regressionPredictTax(year, i);
+			regError[i-1] = this.aberration(this.realMonthValueTax(year, i),regResult[i-1]);
+		}
+	}
+	
 }

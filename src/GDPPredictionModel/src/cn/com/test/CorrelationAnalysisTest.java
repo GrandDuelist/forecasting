@@ -1,6 +1,6 @@
 package cn.com.test;
 
-import cn.com.sql.handle.CorrelationAnalysisServiceImp;
+import cn.com.sql.serviceimp.CorrelationAnalysisServiceImp;
 
 public class CorrelationAnalysisTest {
 	public static void main(String[] args){

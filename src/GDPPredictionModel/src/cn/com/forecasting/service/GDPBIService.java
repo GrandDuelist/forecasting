@@ -38,7 +38,7 @@ public interface GDPBIService {
 	
 	/**
 	 * 混合模型
+	 * @throws Exception 
 	 */
-	 public double mixedModelGDP(int year);
-	 public double mixedModelGDP(int year, int month);
+	 public double mixedPredictGDP(int year, int month) throws Exception;
 }

@@ -14,7 +14,6 @@ import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.external.com.google.gdata.util.common.base.PercentEscaper;
 
 import cn.com.forecasting.pojo.EconomyYmlPoJo;
-import cn.com.forecasting.pojo.TestPojo;
 import cn.com.preprocessing.io.PredictionResultPersistance;
 
 
