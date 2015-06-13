@@ -1,0 +1,23 @@
+# Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           pretty
+relative_permalinks: true
+
+# Setup
+title:               SmartCity
+tagline:             '经济预测分析系统'
+description:         '<a>Smart City System</a>智慧城市系统是上海市信息化发展的重要一步，其中的经济分析子系统主要关注与GDP预测分析，税收收入预测分析以及GDP与税收的关联分析'
+url:                 
+baseurl:             ''
+paginate:            5
+taxurl:              '/tax'
+corurl:              '/correlation'
+# About/contact
+author:
+  name:              Zhihan Fang
+  url:               https://dataspy.github.io
+  email:             ezhihan@gmail.com
+
+# Custom vars
+version:             1.0.0

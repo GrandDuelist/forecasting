@@ -1,0 +1,85 @@
+---
+layout: default
+title: Home
+---
+<h3  id="my_title"  class="masthead-title">
+<a>{{ site.data.economy.gdp.year }}年上海市GDP预测分析图</a>  <small>单位:亿元</small>
+</h3>
+<br>
+		<div style="width:100%">
+			
+			<div>
+				<canvas id="canvas" height="450" width="600"></canvas>
+			</div>
+		</div>
+<br>
+<br>
+<h3  id="my_title"  class="masthead-title">
+<a>{{ site.data.economy.gdp.year }}上海市GDP预测分析表</a>  <small>单位:亿元</small>
+</h3>
+<br>
+<table id="my_table" style="width:80%">
+<thead>
+<tr>
+<th width="14%">月份</th><th>一月</th><th>二月</th><th>三月</th><th>四月</th><th>五月</th><th>六月</th><th>七月</th><th>八月</th><th>九月</th><th>十月</th><th>十一月</th><th>十二月</th>
+</tr>
+</thead>
+<tr>
+	<td>prediction_value</td>
+	{% for month in site.data.economy.gdp.prediction_months %}
+	<td> {{ month.prediction_month }} </td>
+	{% endfor %}
+</tr>
+
+<tr>
+	<td>real_value</td>
+	{% for month in site.data.economy.gdp.realvalue_months %}
+	<td> {{ month.realvalue_month }} </td>
+	{% endfor %}
+</tr>
+
+
+</table>
+
+
+	<script>
+		var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+		var lineChartData = {
+			labels : ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+			datasets : [
+				{
+					label: "实际值",
+					fillColor : "rgba(220,220,220,0.2)",
+					strokeColor : "rgba(220,220,220,1)",
+					pointColor : "rgba(220,220,220,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(220,220,220,1)",
+					data : {{ site.data.economy.gdp.prediction }}
+				},
+				{
+					label: "预测值",
+					fillColor : "rgba(151,187,205,0.2)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(151,187,205,1)",
+					data : {{ site.data.economy.gdp.realvalue }}
+				}
+				
+			]
+
+		}
+
+	window.onload = function(){
+		var ctx = document.getElementById("canvas").getContext("2d");
+		window.myLine = new Chart(ctx).Line(lineChartData, {
+			responsive: true, 
+			bezierCurve : true
+		});
+	}
+
+
+
+	</script>
