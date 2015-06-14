@@ -14,7 +14,7 @@ import cn.com.forecasting.service.TaxBIService;
 import cn.com.preprocessing.io.ExcelReader;
 import cn.com.preprocessing.math.AttributeFilter;
 import cn.com.preprocessing.math.MathCalculation;
-import cn.com.sql.handle.EconomyBIServiceImp;
+import cn.com.sql.serviceimp.EconomyBIServiceImp;
 
 public class RegressionTest {
 	

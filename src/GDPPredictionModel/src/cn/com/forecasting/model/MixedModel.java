@@ -11,27 +11,31 @@ import cn.com.preprocessing.math.ImprovedKNN;
 public class MixedModel {
 	public ImprovedKNN improvedKNN = new ImprovedKNN();
 	
-	private double[] bpResultLastYear;
-	private double[] regResultLastYear;
-	private double[] bpErrorLastYear;
-	private double[] regErrorLastYear;
+	public double[] bpResultLastYear;
+	public double[] regResultLastYear;
+	public double[] bpErrorLastYear;
+	public double[] regErrorLastYear;
 	
-	private double[] bpResult;
-	private double[] regResult;
-	private double[] bpError;
-	private double[] regError;
+	public double[] bpResult;
+	public double[] regResult;
+	public double[] bpError;
+	public double[] regError;
 	
-	private int predictionLength = 12; //预测的时间长度
-	private int predictionMonth; // 预测月份
-	private double[] mixedResult; //混合模型的预测结果
+	public int predictionLength = 12; //预测的时间长度
+	public int predictionMonth; // 预测月份
+	public double[] mixedResult; //混合模型的预测结果
 	
 	
-	public double getPredictionResult(){
+	public MixedModel(){
+		
+	}
+	public double getPredictionResult(int month){
+		this.predictionMonth = month;
 		improvedKNN.bpErrorCurrentYear =bpError;
 		improvedKNN.bpErrorLastYear =this.bpErrorLastYear;
 		improvedKNN.regErrorLastYear = this.regErrorLastYear;
 		improvedKNN.regErrorCurrentYear = this.regError;
-		
+		improvedKNN.currentMonth=this.predictionMonth;
 		ModelType type = improvedKNN.KnnVote();
 		if(type == ModelType.BP) return this.bpResult[this.predictionMonth-1];
 		else return this.regResult[this.predictionMonth-1];

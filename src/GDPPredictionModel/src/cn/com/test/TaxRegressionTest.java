@@ -2,7 +2,7 @@ package cn.com.test;
 
 import cn.com.forecasting.service.GDPBIService;
 import cn.com.forecasting.service.TaxBIService;
-import cn.com.sql.handle.EconomyBIServiceImp;
+import cn.com.sql.serviceimp.EconomyBIServiceImp;
 
 public class TaxRegressionTest {
 	public static void main(String [] args){
