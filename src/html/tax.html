@@ -14,32 +14,7 @@ title: Tax
 		</div>
 <br>
 <br>
-<h3  id="my_title"  class="masthead-title">
-<a>{{ site.data.economy.tax.year }}上海市税务预测分析表</a>  <small>单位:亿元</small>
-</h3>
-<br>
-<table id="my_table" style="width:80%">
-<thead>
-<tr>
-<th width="14%">月份</th><th>一月</th><th>二月</th><th>三月</th><th>四月</th><th>五月</th><th>六月</th><th>七月</th><th>八月</th><th>九月</th><th>十月</th><th>十一月</th><th>十二月</th>
-</tr>
-</thead>
-<tr>
-	<td>prediction_value</td>
-	{% for month in site.data.economy.tax.prediction_months %}
-	<td> {{ month.prediction_month }} </td>
-	{% endfor %}
-</tr>
 
-<tr>
-	<td>real_value</td>
-	{% for month in site.data.economy.tax.realvalue_months %}
-	<td> {{ month.realvalue_month }} </td>
-	{% endfor %}
-</tr>
-
-
-</table>
 
 
 	<script>

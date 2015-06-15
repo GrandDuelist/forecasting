@@ -9,7 +9,7 @@ public class EconomyServiceBITest {
 		GDPBIService service = new EconomyBIServiceImp();
 		TaxBIService tax = new EconomyBIServiceImp();
 		try {
-			tax.trainTax();
+			//tax.trainTax();
 			 //service.trainGDP();
 			// System.out.println(service.bpPredictGDP(2004));
 			// System.out.println(service.regressionPredictGDP(2012,11));
