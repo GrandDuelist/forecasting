@@ -7,4 +7,5 @@ public class DataMapping {
 	public static int numberY = 1; //输出属性个数
 	public static int minPreviousDataNumber = 10; //bp 训练的最小数据数目
 	public static final int PAST_YEAR_NUMBER = 10;
+	public static final int EARLEST_YEAR  = 1980;
 }

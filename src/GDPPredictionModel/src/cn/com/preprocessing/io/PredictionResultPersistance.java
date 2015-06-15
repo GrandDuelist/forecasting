@@ -120,15 +120,15 @@ public class PredictionResultPersistance {
 		Map<String,Object> corMap = new HashMap<String,Object>();
 		
 		gdpMap.put("year",this.contentPoJo.getYear());
-		gdpMap.put("prediction",this.changeArrayToString(this.getContentPoJo().getPredictionGDPMonths(),5));
+		gdpMap.put("prediction",this.changeArrayToString(this.getContentPoJo().getPredictionGDPMonths(),this.getContentPoJo().getCurrentMonth()));
 		gdpMap.put("realvalue", this.changeArrayToString(this.getContentPoJo().getRealGDPMonths(), this.getContentPoJo().getCurrentMonth()-1));
-		gdpMap.put("prediction_months",this.tranArrayToMap("predition_month",this.getContentPoJo().getPredictionGDPMonths(),12));
+		gdpMap.put("prediction_months",this.tranArrayToMap("predition_month",this.getContentPoJo().getPredictionGDPMonths(),this.getContentPoJo().getCurrentMonth()));
 		gdpMap.put("realvalue_months",this.tranArrayToMap("realvalue_month",this.getContentPoJo().getRealGDPMonths(),this.getContentPoJo().getCurrentMonth()-1));
 		
 		taxMap.put("year", this.contentPoJo.getYear());
-		taxMap.put("prediction",this.changeArrayToString(this.getContentPoJo().getPredictionTaxMonths(),5));
+		taxMap.put("prediction",this.changeArrayToString(this.getContentPoJo().getPredictionTaxMonths(),this.contentPoJo.getCurrentMonth()));
 		taxMap.put("realvalue", this.changeArrayToString(this.getContentPoJo().getRealTaxMonths(), this.getContentPoJo().getCurrentMonth()-1));
-		taxMap.put("prediction_months",this.tranArrayToMap("predition_month",this.getContentPoJo().getPredictionTaxMonths(),12));
+		taxMap.put("prediction_months",this.tranArrayToMap("predition_month",this.getContentPoJo().getPredictionTaxMonths(),this.getContentPoJo().getCurrentMonth()));
 		taxMap.put("realvalue_months",this.tranArrayToMap("realvalue_month",this.getContentPoJo().getRealTaxMonths(),this.getContentPoJo().getCurrentMonth()-1));
 		
 		corMap.put("year", this.changeArrayToString(this.contentPoJo.getPastYears(), DataMapping.PAST_YEAR_NUMBER));

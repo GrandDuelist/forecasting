@@ -34,7 +34,9 @@ public class CorrelationAnalysisServiceImp implements CorrelationAnalysisService
 		this.tax = tax;
 	}
 
-
+	public CorrelationAnalysisServiceImp(){
+		
+	}
 	public CorrelationAnalysisServiceImp(int startYear,int endYear){
 		this.startYear=startYear;
 		this.endYear=endYear;
