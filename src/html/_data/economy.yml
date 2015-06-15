@@ -1,59 +1,56 @@
-cor: {value: '[0.958,0.959,0.96,0.965,0.972,0.968,0.973,0.978,0.982,0.986]', year: '[2002,2003,2004,2005,2006,2007,2008,2009,2010,2011]'}
+cor: {value: '[0.9677007685153374,0.9603916500694171,0.9606831973557871,0.9622495380311271,0.9661546431201837,0.9728077913471457,0.9688082418823672,0.9731177506461246,0.9784818969869983,0.9829594997343329]',
+  year: '[2002,2003,2004,2005,2006,2007,2008,2009,2010,2011]'}
 tax:
   realvalue_months:
-  - {realvalue_month: 284.34}
-  - {realvalue_month: 285.6}
-  - {realvalue_month: 286.98}
-  - {realvalue_month: 288.57}
-  - {realvalue_month: 290.04}
-  - {realvalue_month: 291.38}
-  - {realvalue_month: 292.85}
-  - {realvalue_month: 294.37}
-  - {realvalue_month: 295.59}
-  - {realvalue_month: 297.04}
-  - {realvalue_month: 298.41}
+  - {realvalue_month: 284.34165835449414}
+  - {realvalue_month: 285.6098536970059}
+  - {realvalue_month: 286.9863319571914}
+  - {realvalue_month: 288.5726097723603}
+  - {realvalue_month: 290.04271873117636}
+  - {realvalue_month: 291.3857163019502}
+  - {realvalue_month: 292.857409520608}
+  - {realvalue_month: 294.3701830295267}
+  - {realvalue_month: 295.59035716754926}
+  - {realvalue_month: 297.04008154341057}
   prediction_months:
-  - {predition_month: 226.08}
-  - {predition_month: 305.85}
-  - {predition_month: 307.04}
-  - {predition_month: 307.34}
-  - {predition_month: 308.33}
-  - {predition_month: 309.08}
-  - {predition_month: 309.42}
-  - {predition_month: 309.72}
-  - {predition_month: 310.36}
-  - {predition_month: 311.39}
-  - {predition_month: 311.91}
-  - {predition_month: 312.88}
-  prediction: '[226.08,305.85,307.04,307.34,308.33]'
+  - {predition_month: 305.11172651021724}
+  - {predition_month: 305.85231145760866}
+  - {predition_month: 307.0478346699963}
+  - {predition_month: 307.34858588348436}
+  - {predition_month: 308.3359152274803}
+  - {predition_month: 309.08972442609127}
+  - {predition_month: 309.4233226147447}
+  - {predition_month: 309.7226685405272}
+  - {predition_month: 310.36135918031437}
+  - {predition_month: 311.3920380085957}
+  - {predition_month: 311.91668572708437}
+  prediction: '[305.11172651021724,305.85231145760866,307.0478346699963,307.34858588348436,308.3359152274803,309.08972442609127,309.4233226147447,309.7226685405272,310.36135918031437,311.3920380085957,311.91668572708437]'
   year: 2012
-  realvalue: '[284.34,285.6,286.98,288.57,290.04,291.38,292.85,294.37,295.59,297.04,298.41]'
+  realvalue: '[284.34165835449414,285.6098536970059,286.9863319571914,288.5726097723603,290.04271873117636,291.3857163019502,292.857409520608,294.3701830295267,295.59035716754926,297.04008154341057]'
 gdp:
   realvalue_months:
-  - {realvalue_month: 1674.71}
-  - {realvalue_month: 1681.88}
-  - {realvalue_month: 1691.65}
-  - {realvalue_month: 1699.69}
-  - {realvalue_month: 1707.79}
-  - {realvalue_month: 1716.01}
-  - {realvalue_month: 1724.4}
-  - {realvalue_month: 1732.84}
-  - {realvalue_month: 1742.15}
-  - {realvalue_month: 1749.8}
-  - {realvalue_month: 1758.85}
+  - {realvalue_month: 1674.7193808441252}
+  - {realvalue_month: 1681.8831673299933}
+  - {realvalue_month: 1691.6538578502277}
+  - {realvalue_month: 1699.6927988884277}
+  - {realvalue_month: 1707.790885214067}
+  - {realvalue_month: 1716.014199550446}
+  - {realvalue_month: 1724.4074325369993}
+  - {realvalue_month: 1732.8423620051274}
+  - {realvalue_month: 1742.154239541097}
+  - {realvalue_month: 1749.8049250791682}
   prediction_months:
-  - {predition_month: 1632.37}
-  - {predition_month: 1645.93}
-  - {predition_month: 1661.09}
-  - {predition_month: 1675.7}
-  - {predition_month: 1687.24}
-  - {predition_month: 1697.07}
-  - {predition_month: 1704.65}
-  - {predition_month: 1705.01}
-  - {predition_month: 1703.57}
-  - {predition_month: 1706.29}
-  - {predition_month: 1709.29}
-  - {predition_month: 1712.86}
-  prediction: '[1632.37,1645.93,1661.09,1675.7,1687.24]'
+  - {predition_month: 1811.4797108784799}
+  - {predition_month: 1645.9397504687054}
+  - {predition_month: 1661.0928209310393}
+  - {predition_month: 1675.706483679987}
+  - {predition_month: 1687.2497327728731}
+  - {predition_month: 1697.0710668741435}
+  - {predition_month: 1704.6544256492432}
+  - {predition_month: 1705.0183133626256}
+  - {predition_month: 1703.57486353068}
+  - {predition_month: 1706.2980327915661}
+  - {predition_month: 1709.2931418306405}
+  prediction: '[1811.4797108784799,1645.9397504687054,1661.0928209310393,1675.706483679987,1687.2497327728731,1697.0710668741435,1704.6544256492432,1705.0183133626256,1703.57486353068,1706.2980327915661,1709.2931418306405]'
   year: 2012
-  realvalue: '[1674.71,1681.88,1691.65,1699.69,1707.79,1716.01,1724.4,1732.84,1742.15,1749.8,1758.85]'
+  realvalue: '[1674.7193808441252,1681.8831673299933,1691.6538578502277,1699.6927988884277,1707.790885214067,1716.014199550446,1724.4074325369993,1732.8423620051274,1742.154239541097,1749.8049250791682]'
