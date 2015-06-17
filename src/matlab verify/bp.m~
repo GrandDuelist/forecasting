@@ -1,1 +1,0 @@
-[NUM] = xlsread('../../data/data.xls','上海','B3:I');
